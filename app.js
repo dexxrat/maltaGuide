@@ -125,10 +125,29 @@ function unlockSpeech() {
   }
 }
 
+// The GPS simulator is a testing tool, not something a real user should ever
+// see or accidentally toggle — it's only reachable via a URL flag, e.g.
+// https://.../?dev=1. Without that flag the whole panel is hidden and
+// simulation mode is forced off, no matter what got saved to localStorage
+// during earlier testing.
+function isDevMode() {
+  try {
+    return new URLSearchParams(window.location.search).get('dev') === '1';
+  } catch (e) {
+    return false;
+  }
+}
+
 function onStart() {
   unlockSpeech(); // must be called synchronously inside the click handler
   document.getElementById('startScreen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
+
+  if (!isDevMode()) {
+    state.simMode = false;
+    document.getElementById('devPanel').classList.add('dev-hidden');
+  }
+
   applyStaticI18n();
   initMap();
   renderList();

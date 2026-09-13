@@ -562,6 +562,8 @@ main {
 }
 
 /* ---------- DEV PANEL ---------- */
+.dev-panel.dev-hidden { display: none !important; }
+
 .dev-panel {
   position: fixed;
   left: 0;
