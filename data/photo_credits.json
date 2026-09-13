@@ -238,5 +238,29 @@
       "license": "CC BY-SA 1.0 fi",
       "source": "https://commons.wikimedia.org/wiki/File:2022-01-01_12-16-38_Malta_DSF0005_2.jpg"
     }
+  ],
+  "qala_1948_disaster": [
+    {
+      "title": "File:Fishing Boats and fishermen.jpg",
+      "artist": "Mario L Borg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Fishing_Boats_and_fishermen.jpg"
+    }
+  ],
+  "anton_buttigieg_bust": [
+    {
+      "title": "File:Dr. Anton Buttigieg.jpg",
+      "artist": "Department of Information, Malta",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Dr._Anton_Buttigieg.jpg"
+    }
+  ],
+  "guzepp_portelli_bust": [
+    {
+      "title": "File:Ġużepp Portelli.jpg",
+      "artist": "NickGeorge1993",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:%C4%A0u%C5%BCepp_Portelli.jpg"
+    }
   ]
 }

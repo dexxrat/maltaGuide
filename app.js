@@ -374,7 +374,7 @@ function showPoiCard(poi, opts = {}) {
   renderPhotoCarousel(poi);
 
   document.getElementById('poiCard').classList.remove('hidden');
-  speak(poiText(poi));
+  prepareNarration(poiText(poi), state.lang);
 
   if (opts.markVisit !== false) {
     markVisited(poi.id);
@@ -401,8 +401,10 @@ function sanitizeForSpeech(text) {
     .trim();
 }
 
-// Starts (or restarts) narration from scratch — used for POI text and for
-// the short voice-preview samples in the settings screen.
+// Starts narration immediately — used for the short voice-preview samples in
+// the settings screen, where clicking ▶ IS the play command already. POI
+// cards use prepareNarration() instead, which loads the text but waits for
+// an explicit tap on the play button.
 function speak(text, langOverride) {
   if (!('speechSynthesis' in window) || !text) return;
   const lang = langOverride || state.lang;
@@ -411,6 +413,20 @@ function speak(text, langOverride) {
   state.playback.charIndex = 0;
   state.playback.charsPerSecond = null; // fresh text — forget the old estimate
   speakFrom(state.playback.fullText, lang, 0);
+}
+
+// Loads a POI's text into the playback state and resets the transport UI to
+// a paused, start-of-story position — but doesn't speak a word until the
+// user presses play. Opening a card (by walking up to it or tapping the
+// list) should never start talking on its own.
+function prepareNarration(text, lang) {
+  window.speechSynthesis.cancel();
+  state.playback.fullText = sanitizeForSpeech(text);
+  state.playback.lang = lang;
+  state.playback.charIndex = 0;
+  state.playback.charsPerSecond = null;
+  state.playback.playing = false;
+  updatePlaybackUI();
 }
 
 // The actual engine: speaks fullText starting at charOffset. Re-called

@@ -330,6 +330,47 @@
       "photos": [
         "assets/photos/ta_mixta_cave.jpg"
       ]
+    },
+    {
+      "id": "qala_1948_disaster",
+      "name": "1948 Gozo Luzzu Disaster Memorial",
+      "category": "historic",
+      "icon": "⚓",
+      "lat": 36.02723,
+      "lng": 14.30096,
+      "coordsVerified": true,
+      "coordsNote": "OSM historic=memorial node with wikipedia=en:1948 Gozo luzzu disaster tag.",
+      "photos": [
+        "assets/photos/qala_1948_disaster.jpg"
+      ]
+    },
+    {
+      "id": "anton_buttigieg_bust",
+      "name": "Anton Buttigieg Bust",
+      "category": "historic",
+      "icon": "🗿",
+      "lat": 36.03468,
+      "lng": 14.30972,
+      "radius": 60,
+      "coordsVerified": true,
+      "coordsNote": "OSM tourism=artwork node (bust), subject:wikidata=Q250177. Only ~180m from the Portelli bust, so both get a smaller radius.",
+      "photos": [
+        "assets/photos/anton_buttigieg.jpg"
+      ]
+    },
+    {
+      "id": "guzepp_portelli_bust",
+      "name": "Ġużepp Portelli Bust",
+      "category": "historic",
+      "icon": "⛪",
+      "lat": 36.03306,
+      "lng": 14.30971,
+      "radius": 60,
+      "coordsVerified": true,
+      "coordsNote": "OSM tourism=artwork node (bust), subject:wikidata=Q20065119.",
+      "photos": [
+        "assets/photos/guzepp_portelli.jpg"
+      ]
     }
   ]
 }

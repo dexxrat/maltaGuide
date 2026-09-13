@@ -82,3 +82,12 @@ All photos are from Wikimedia Commons under free licenses. Attribution kept here
 ### Ta' Mixta Cave
 - Ralf Roletschek, CC BY-SA 1.0 fi. [2022-01-01 12-16-38 Malta DSF0005 2.jpg](https://commons.wikimedia.org/wiki/File:2022-01-01_12-16-38_Malta_DSF0005_2.jpg)
 
+### 1948 Gozo Luzzu Disaster Memorial
+- Mario L Borg, CC BY-SA 4.0. [Fishing Boats and fishermen.jpg](https://commons.wikimedia.org/wiki/File:Fishing_Boats_and_fishermen.jpg)
+
+### Anton Buttigieg Bust
+- Department of Information, Malta, CC BY-SA 3.0. [Dr. Anton Buttigieg.jpg](https://commons.wikimedia.org/wiki/File:Dr._Anton_Buttigieg.jpg)
+
+### Ġużepp Portelli Bust
+- NickGeorge1993, CC BY-SA 4.0. [Ġużepp Portelli.jpg](https://commons.wikimedia.org/wiki/File:%C4%A0u%C5%BCepp_Portelli.jpg)
+
