@@ -262,5 +262,29 @@
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:%C4%A0u%C5%BCepp_Portelli.jpg"
     }
+  ],
+  "comino_island_intro": [
+    {
+      "title": "File:Sudika Kemmuna.jpg",
+      "artist": "Sudika",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sudika_Kemmuna.jpg"
+    }
+  ],
+  "st_marys_tower_comino": [
+    {
+      "title": "File:It-Torri ta Santa Marija.jpg",
+      "artist": "Kenazz",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:It-Torri_ta_Santa_Marija.jpg"
+    }
+  ],
+  "comino_chapel": [
+    {
+      "title": "File:Kapelle auf Comino.jpg",
+      "artist": "Rolf gastler",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kapelle_auf_Comino.jpg"
+    }
   ]
 }

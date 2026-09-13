@@ -91,3 +91,12 @@ All photos are from Wikimedia Commons under free licenses. Attribution kept here
 ### Ġużepp Portelli Bust
 - NickGeorge1993, CC BY-SA 4.0. [Ġużepp Portelli.jpg](https://commons.wikimedia.org/wiki/File:%C4%A0u%C5%BCepp_Portelli.jpg)
 
+### Comino (Kemmuna)
+- Sudika, CC BY-SA 3.0. [Sudika Kemmuna.jpg](https://commons.wikimedia.org/wiki/File:Sudika_Kemmuna.jpg)
+
+### Saint Mary's Tower (Comino)
+- Kenazz, CC BY-SA 4.0. [It-Torri ta Santa Marija.jpg](https://commons.wikimedia.org/wiki/File:It-Torri_ta_Santa_Marija.jpg)
+
+### Chapel of the Return from Egypt
+- Rolf gastler, CC BY-SA 3.0. [Kapelle auf Comino.jpg](https://commons.wikimedia.org/wiki/File:Kapelle_auf_Comino.jpg)
+

@@ -371,6 +371,45 @@
       "photos": [
         "assets/photos/guzepp_portelli.jpg"
       ]
+    },
+    {
+      "id": "comino_island_intro",
+      "name": "Comino (Kemmuna)",
+      "category": "historic",
+      "icon": "🏝️",
+      "lat": 36.01139,
+      "lng": 14.33667,
+      "coordsVerified": false,
+      "coordsNote": "Wikipedia infobox coordinate for the island as a whole, not a specific pinned spot — close to the settled/visited area near the chapel and old farm buildings, worth checking on the ground.",
+      "photos": [
+        "assets/photos/comino_island_intro.jpg"
+      ]
+    },
+    {
+      "id": "st_marys_tower_comino",
+      "name": "Saint Mary's Tower (Comino Tower)",
+      "category": "historic",
+      "icon": "🏯",
+      "lat": 36.00694,
+      "lng": 14.32944,
+      "coordsVerified": true,
+      "coordsNote": "Coordinate from Wikidata (Q1345155 / Saint Mary's Tower).",
+      "photos": [
+        "assets/photos/st_marys_tower_comino.jpg"
+      ]
+    },
+    {
+      "id": "comino_chapel",
+      "name": "Chapel of the Return from Egypt",
+      "category": "historic",
+      "icon": "⛪",
+      "lat": 36.01511,
+      "lng": 14.33583,
+      "coordsVerified": true,
+      "coordsNote": "Coordinate from Wikipedia infobox (Comino Chapel article, Q24358824).",
+      "photos": [
+        "assets/photos/comino_chapel.jpg"
+      ]
     }
   ]
 }
