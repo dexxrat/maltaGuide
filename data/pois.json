@@ -220,11 +220,11 @@
       "name": "Belancourt Battery",
       "category": "historic",
       "icon": "🏰",
-      "lat": 36.06117,
-      "lng": 14.28246,
+      "lat": 36.06125,
+      "lng": 14.282306,
       "radius": 35,
       "coordsVerified": true,
-      "coordsNote": "OSM historic=fort node. Officially 'Ramla Left Battery', also known as Belancourt or Xaghra Battery. Only ~47m from roman_villa and ~130-170m from ramla_bay — expected overlap given the real-world clustering.",
+      "coordsNote": "Coordinate from Wikidata (Q20949702 / Ramla Left Battery), more precise than the earlier OSM-derived one.",
       "photos": [
         "assets/photos/belancourt_battery.jpg"
       ]
@@ -293,6 +293,34 @@
       "coordsNote": "Coordinates from the Wikipedia infobox for Marsalforn Tower. About 490m from the marsalforn POI, so treat it as part of that cluster rather than walkable from Ramla right now.",
       "photos": [
         "assets/photos/marsalforn_tower.jpg"
+      ]
+    },
+    {
+      "id": "gironda_battery",
+      "name": "Ramla Right Battery (Gironda / Nadur Battery)",
+      "category": "historic",
+      "icon": "🏰",
+      "lat": 36.062667,
+      "lng": 14.286889,
+      "radius": 40,
+      "coordsVerified": true,
+      "coordsNote": "Coordinate from Wikidata (Q20949704 / Ramla Right Battery).",
+      "photos": [
+        "assets/photos/gironda_battery.jpg"
+      ]
+    },
+    {
+      "id": "ta_mixta_cave",
+      "name": "Ta' Mixta Cave",
+      "category": "viewpoint",
+      "icon": "🕳️",
+      "lat": 36.06334167,
+      "lng": 14.28945833,
+      "radius": 50,
+      "coordsVerified": true,
+      "coordsNote": "Coordinate from Wikipedia/Wikidata (Q108766191 / Mixta Cave).",
+      "photos": [
+        "assets/photos/ta_mixta_cave.jpg"
       ]
     }
   ]
