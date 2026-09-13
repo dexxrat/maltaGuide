@@ -68,6 +68,15 @@
       },
       "marsaxlokk": {
         "text": "Marsaxlokk — рыбацкая деревня, где до сих пор покачиваются на воде разноцветные традиционные лодки luzzu с нарисованным на носу глазом — древним оберегом от злых духов. По воскресеньям утром здесь разворачивается большой рыбный рынок: приезжайте пораньше, лучшая рыба уходит быстро."
+      },
+      "calypso_cave": {
+        "text": "Эта пещера на западной стороне бухты Рамла считается тем самым гротом из «Одиссеи», где нимфа Калипсо семь лет удерживала Одиссея после кораблекрушения. Пещеру закрывали из-за риска обвала, но потом снова открыли для посещения. Часто её путают с пещерой Тал-Микста — та находится на противоположном, надурском берегу той же бухты."
+      },
+      "roman_villa": {
+        "text": "Здесь сохранились руины древнеримской виллы с банями — Villa Rumana tar-Ramla l-Ħamra. Отдельной большой статьи о ней нет, но памятник числится среди известных римских терм острова. Стоит буквально в паре сотен метров от пляжа Рамла, так что заглянуть сюда легко по пути."
+      },
+      "belancourt_battery": {
+        "text": "Батарея Беланкур, она же Ramla Left Battery, была построена рыцарями ордена Святого Иоанна в 1715–1716 годах — часть цепи береговых укреплений, защищавших Мальтийские острова. Сегодня от неё остались только руины на холме над пляжем Рамла."
       }
     }
   },
@@ -140,6 +149,15 @@
       },
       "marsaxlokk": {
         "text": "Marsaxlokk is a fishing village where colorful traditional luzzu boats still bob in the harbor, each with an eye painted on the bow — an ancient charm against evil spirits. On Sunday mornings the waterfront turns into a lively fish market: arrive early, the best catch goes fast."
+      },
+      "calypso_cave": {
+        "text": "This cave on the western side of Ramla Bay is said to be the very grotto from the Odyssey, where the nymph Calypso kept Odysseus for seven years after his shipwreck. It was once closed over fears of collapse but has since reopened to visitors. It's often confused with Tal-Mixta Cave, which sits on the opposite, Nadur side of the same bay."
+      },
+      "roman_villa": {
+        "text": "These are the ruins of a Roman-era villa and baths — Villa Rumana tar-Ramla l-Ħamra. There isn't a big write-up on it, but the site is listed among Malta's known Roman bath complexes. It sits just a couple hundred meters from Ramla beach, easy to combine with a swim."
+      },
+      "belancourt_battery": {
+        "text": "Belancourt Battery, officially Ramla Left Battery, was built by the Knights of the Order of Saint John in 1715-1716 as part of a chain of coastal fortifications defending the Maltese Islands. Only ruins remain today, on the hill above Ramla beach."
       }
     }
   }

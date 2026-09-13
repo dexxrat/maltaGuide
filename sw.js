@@ -1,9 +1,10 @@
-const CACHE_NAME = 'malta-guide-v4';
+const CACHE_NAME = 'malta-guide-v5';
 
 const POI_IDS = [
   'ramla_bay', 'san_blas', 'hondoq', 'wied_ilghasri', 'dwejra', 'mgarr_ixxini',
   'xlendi', 'marsalforn', 'ggantija', 'cittadella', 'qala_belvedere',
-  'comino_lagoons', 'st_peters_pool', 'marsaxlokk'
+  'comino_lagoons', 'st_peters_pool', 'marsaxlokk',
+  'calypso_cave', 'roman_villa', 'belancourt_battery'
 ];
 
 const PRECACHE_URLS = [

@@ -82,5 +82,23 @@
     "artist": "Christian Formosa",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Coastal_Erosion,_St_Peter%27s_Pool,_Delimara,_Malta.jpg"
+  },
+  "calypso_cave": {
+    "title": "File:Bahía de Ramla desde la cueva de Calipso, isla de Gozo, Malta, 2021-08-22, DD 01.jpg",
+    "artist": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_Ramla_desde_la_cueva_de_Calipso,_isla_de_Gozo,_Malta,_2021-08-22,_DD_01.jpg"
+  },
+  "belancourt_battery": {
+    "title": "File:Ramla Left Battery, Ramla Bay 001.jpg",
+    "artist": "Matthew Axiak",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ramla_Left_Battery,_Ramla_Bay_001.jpg"
+  },
+  "roman_villa": {
+    "title": "File:Ramla l-Hamra c1910.jpg",
+    "artist": "Unknown author",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Ramla_l-Hamra_c1910.jpg"
   }
 }

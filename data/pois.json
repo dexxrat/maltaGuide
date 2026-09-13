@@ -186,6 +186,48 @@
       "photos": [
         "assets/photos/marsaxlokk.jpg"
       ]
+    },
+    {
+      "id": "calypso_cave",
+      "name": "Calypso's Cave",
+      "category": "historic",
+      "icon": "🗿",
+      "lat": 36.06067,
+      "lng": 14.27949,
+      "radius": 50,
+      "coordsVerified": true,
+      "coordsNote": "OSM natural=cave_entrance node, western side of Ramla bay (has a Wikipedia/Wikidata entry).",
+      "photos": [
+        "assets/photos/calypso_cave.jpg"
+      ]
+    },
+    {
+      "id": "roman_villa",
+      "name": "Ramla Bay Roman Villa",
+      "category": "historic",
+      "icon": "🏺",
+      "lat": 36.06126,
+      "lng": 14.28297,
+      "radius": 35,
+      "coordsVerified": true,
+      "coordsNote": "OSM historic=archaeological_site node (Villa Rumana tar-Ramla l-Hamra). No dedicated Wikipedia article, but the site is referenced in Wikipedia's list of Roman public baths as the Xaghra Ramla l-Hamra Roman Baths. Only ~130-170m from ramla_bay/belancourt_battery, so it will often trigger alongside them — expected given how close these really are on the ground.",
+      "photos": [
+        "assets/photos/roman_villa.jpg"
+      ]
+    },
+    {
+      "id": "belancourt_battery",
+      "name": "Belancourt Battery",
+      "category": "historic",
+      "icon": "🏰",
+      "lat": 36.06117,
+      "lng": 14.28246,
+      "radius": 35,
+      "coordsVerified": true,
+      "coordsNote": "OSM historic=fort node. Officially 'Ramla Left Battery', also known as Belancourt or Xaghra Battery. Only ~47m from roman_villa and ~130-170m from ramla_bay — expected overlap given the real-world clustering.",
+      "photos": [
+        "assets/photos/belancourt_battery.jpg"
+      ]
     }
   ]
 }

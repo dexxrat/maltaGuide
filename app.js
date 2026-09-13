@@ -494,7 +494,7 @@ function checkProximity() {
       nearestDist = dist;
       nearest = poi;
     }
-    const isInside = dist <= state.radius;
+    const isInside = dist <= (poi.radius || state.radius);
     const wasInside = state.insideRadius.has(poi.id);
     if (isInside && !wasInside) {
       state.insideRadius.add(poi.id);
