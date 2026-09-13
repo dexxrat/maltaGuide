@@ -1,14 +1,9 @@
-const CACHE_NAME = 'malta-guide-v9';
+const CACHE_NAME = 'malta-guide-v10';
 
-const POI_IDS = [
-  'ramla_bay', 'san_blas', 'hondoq', 'wied_ilghasri', 'dwejra', 'mgarr_ixxini',
-  'xlendi', 'marsalforn', 'ggantija', 'cittadella', 'qala_belvedere',
-  'comino_lagoons', 'st_peters_pool', 'marsaxlokk',
-  'calypso_cave', 'roman_villa', 'belancourt_battery',
-  'fungus_rock', 'azure_window', 'wolseley_battery', 'tas_salvatur',
-  'marsalforn_tower', 'gironda_battery', 'ta_mixta_cave'
-];
-
+// Static app-shell files. Photo paths are no longer hardcoded here — they're
+// read straight out of data/pois.json at install time, so adding a photo (or
+// a second/third photo for a POI) to pois.json is enough; nothing here needs
+// to be kept in sync by hand.
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -21,20 +16,38 @@ const PRECACHE_URLS = [
   './assets/icon-180.png',
   './assets/icon-192.png',
   './assets/icon-512.png',
-  ...POI_IDS.map(id => `./assets/photos/${id}.jpg`),
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
 ];
 
+async function getPhotoUrls() {
+  try {
+    const res = await fetch('./data/pois.json');
+    const data = await res.json();
+    const urls = [];
+    (data.pois || []).forEach(poi => {
+      (poi.photos || []).forEach(p => urls.push('./' + p));
+    });
+    return urls;
+  } catch (err) {
+    console.warn('Could not read pois.json for photo precaching', err);
+    return [];
+  }
+}
+
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return Promise.all(
-        PRECACHE_URLS.map(url =>
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const photoUrls = await getPhotoUrls();
+      const allUrls = PRECACHE_URLS.concat(photoUrls);
+      await Promise.all(
+        allUrls.map(url =>
           cache.add(url).catch(err => console.warn('Precache failed for', url, err))
         )
       );
-    }).then(() => self.skipWaiting())
+      self.skipWaiting();
+    })()
   );
 });
 

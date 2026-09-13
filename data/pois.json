@@ -15,7 +15,8 @@
       "coordsVerified": true,
       "coordsNote": "Center of the two mapped swimming-area halves of the beach.",
       "photos": [
-        "assets/photos/ramla_bay.jpg"
+        "assets/photos/ramla_bay.jpg",
+        "assets/photos/ramla_bay_2.jpg"
       ]
     },
     {
@@ -119,7 +120,8 @@
       "coordsVerified": true,
       "coordsNote": "Mapped temple site/attraction node.",
       "photos": [
-        "assets/photos/ggantija.jpg"
+        "assets/photos/ggantija.jpg",
+        "assets/photos/ggantija_2.jpg"
       ]
     },
     {
@@ -132,7 +134,8 @@
       "coordsVerified": true,
       "coordsNote": "Mapped Cittadella node in Rabat/Victoria.",
       "photos": [
-        "assets/photos/cittadella.jpg"
+        "assets/photos/cittadella.jpg",
+        "assets/photos/cittadella_2.jpg"
       ]
     },
     {
@@ -158,7 +161,8 @@
       "coordsVerified": true,
       "coordsNote": "Mapped tourism attraction point between Comino and Cominotto (the Blue Lagoon channel).",
       "photos": [
-        "assets/photos/comino_lagoons.jpg"
+        "assets/photos/comino_lagoons.jpg",
+        "assets/photos/comino_lagoons_2.jpg"
       ]
     },
     {
@@ -198,7 +202,8 @@
       "coordsVerified": true,
       "coordsNote": "OSM natural=cave_entrance node, western side of Ramla bay (has a Wikipedia/Wikidata entry).",
       "photos": [
-        "assets/photos/calypso_cave.jpg"
+        "assets/photos/calypso_cave.jpg",
+        "assets/photos/calypso_cave_2.jpg"
       ]
     },
     {
@@ -253,7 +258,8 @@
       "coordsVerified": true,
       "coordsNote": "OSM tourism=attraction node with wikipedia=en:Azure Window tag. Only ~112m from dwejra, so it will usually trigger alongside it — expected given how close they really are.",
       "photos": [
-        "assets/photos/azure_window.jpg"
+        "assets/photos/azure_window.jpg",
+        "assets/photos/azure_window_2.jpg"
       ]
     },
     {
@@ -292,7 +298,8 @@
       "coordsVerified": true,
       "coordsNote": "Coordinates from the Wikipedia infobox for Marsalforn Tower. About 490m from the marsalforn POI, so treat it as part of that cluster rather than walkable from Ramla right now.",
       "photos": [
-        "assets/photos/marsalforn_tower.jpg"
+        "assets/photos/marsalforn_tower.jpg",
+        "assets/photos/marsalforn_tower_2.jpg"
       ]
     },
     {

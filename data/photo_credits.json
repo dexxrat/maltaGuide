@@ -1,146 +1,236 @@
 {
-  "ramla_bay": {
-    "title": "File:Bahía de Ramla desde la cueva de Calipso, isla de Gozo, Malta, 2021-08-22, DD 02.jpg",
-    "artist": "Diego Delso",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_Ramla_desde_la_cueva_de_Calipso,_isla_de_Gozo,_Malta,_2021-08-22,_DD_02.jpg"
-  },
-  "san_blas": {
-    "title": "File:San Blas Bay.JPG",
-    "artist": "Erik1980",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:San_Blas_Bay.JPG"
-  },
-  "hondoq": {
-    "title": "File:Rummien Ħondoq ir-Rummien 04.jpg",
-    "artist": "Continentaleurope",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Rummien_%C4%A6ondoq_ir-Rummien_04.jpg"
-  },
-  "wied_ilghasri": {
-    "title": "File:Wied Il-Għasri, isla de Gozo, Malta, 2021-08-23, DD 02-06 PAN.jpg",
-    "artist": "Diego Delso",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Wied_Il-G%C4%A7asri,_isla_de_Gozo,_Malta,_2021-08-23,_DD_02-06_PAN.jpg"
-  },
-  "dwejra": {
-    "title": "File:Cave back to the Inland Sea (26155892630).jpg",
-    "artist": "portengaround",
-    "license": "CC BY-SA 2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Cave_back_to_the_Inland_Sea_(26155892630).jpg"
-  },
-  "mgarr_ixxini": {
-    "title": "File:Bahía de Mġarr ix-Xini, isla de Gozo, Malta, 2021-08-23, DD 41.jpg",
-    "artist": "Diego Delso",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_M%C4%A1arr_ix-Xini,_isla_de_Gozo,_Malta,_2021-08-23,_DD_41.jpg"
-  },
-  "xlendi": {
-    "title": "File:Bahía de Xlendi, isla de Gozo, Malta, 2021-08-22, DD 84.jpg",
-    "artist": "Diego Delso",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_Xlendi,_isla_de_Gozo,_Malta,_2021-08-22,_DD_84.jpg"
-  },
-  "marsalforn": {
-    "title": "File:Marsalforn, Gozo Sunset.jpg",
-    "artist": "Borgden",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Marsalforn,_Gozo_Sunset.jpg"
-  },
-  "ggantija": {
-    "title": "File:Templo de Ġgantija, isla de Gozo, Malta, 2021-08-23, DD 17.jpg",
-    "artist": "Diego Delso",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Templo_de_%C4%A0gantija,_isla_de_Gozo,_Malta,_2021-08-23,_DD_17.jpg"
-  },
-  "cittadella": {
-    "title": "File:\"The Bastions\", Citadel, Gozo-Photo by Gino Galea.jpg",
-    "artist": "Gino Galea",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:%22The_Bastions%22,_Citadel,_Gozo-Photo_by_Gino_Galea.jpg"
-  },
-  "comino_lagoons": {
-    "title": "File:Malta - Ghajnsielem - Comino + Large Blue Lagoon Rock + Cominotto + Blue Lagoon + Gozo (St. Mary's Tower) 01 ies.jpg",
-    "artist": "Frank Vincentz",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Malta_-_Ghajnsielem_-_Comino_%2B_Large_Blue_Lagoon_Rock_%2B_Cominotto_%2B_Blue_Lagoon_%2B_Gozo_(St._Mary%27s_Tower)_01_ies.jpg"
-  },
-  "marsaxlokk": {
-    "title": "File:Malta Marsaxlokk BW 011-10-04 14-40-27.JPG",
-    "artist": "Berthold Werner",
-    "license": "CC BY-SA 3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Malta_Marsaxlokk_BW_011-10-04_14-40-27.JPG"
-  },
-  "qala_belvedere": {
-    "title": "File:Comino.png",
-    "artist": "Saviour Bonnici",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Comino.png"
-  },
-  "st_peters_pool": {
-    "title": "File:Coastal Erosion, St Peter's Pool, Delimara, Malta.jpg",
-    "artist": "Christian Formosa",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Coastal_Erosion,_St_Peter%27s_Pool,_Delimara,_Malta.jpg"
-  },
-  "calypso_cave": {
-    "title": "File:Bahía de Ramla desde la cueva de Calipso, isla de Gozo, Malta, 2021-08-22, DD 01.jpg",
-    "artist": "Diego Delso",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_Ramla_desde_la_cueva_de_Calipso,_isla_de_Gozo,_Malta,_2021-08-22,_DD_01.jpg"
-  },
-  "belancourt_battery": {
-    "title": "File:Ramla Left Battery, Ramla Bay 001.jpg",
-    "artist": "Matthew Axiak",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ramla_Left_Battery,_Ramla_Bay_001.jpg"
-  },
-  "roman_villa": {
-    "title": "File:Ramla l-Hamra c1910.jpg",
-    "artist": "Unknown author",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Ramla_l-Hamra_c1910.jpg"
-  },
-  "fungus_rock": {
-    "title": "File:Fungus Rock, Dwejra (Gozo).jpg",
-    "artist": "Zulimark",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Fungus_Rock,_Dwejra_(Gozo).jpg"
-  },
-  "azure_window": {
-    "title": "File:Azure window on the Gozo island a day before the collapse.jpg",
-    "artist": "Vitold Muratov",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Azure_window_on_the_Gozo_island_a_day_before_the_collapse.jpg"
-  },
-  "wolseley_battery": {
-    "title": "File:Wolseley Battery pillbox, Marsaxlokk 001.jpg",
-    "artist": "Matthew Axiak",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Wolseley_Battery_pillbox,_Marsaxlokk_001.jpg"
-  },
-  "tas_salvatur": {
-    "title": "File:Risen Christ Statue on The Redeemer Hill, Gozo.jpg",
-    "artist": "Jonathan Mercieca",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Risen_Christ_Statue_on_The_Redeemer_Hill,_Gozo.jpg"
-  },
-  "marsalforn_tower": {
-    "title": "File:Last Marsalforn Tower.jpg",
-    "artist": "Author only mentioned: Michele Farrugia (author) in Bonello, Giovanni (2007). Nostalgias of Gozo. Valletta: Fondazzjoni Patrimonju Malti. p. 97. ISBN 9789993271611.",
-    "license": "Public domain",
-    "source": "https://commons.wikimedia.org/wiki/File:Last_Marsalforn_Tower.jpg"
-  },
-  "gironda_battery": {
-    "title": "File:Ramla Right Battery, Ramla Bay 001.jpg",
-    "artist": "Matthew Axiak",
-    "license": "CC BY-SA 4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Ramla_Right_Battery,_Ramla_Bay_001.jpg"
-  },
-  "ta_mixta_cave": {
-    "title": "File:2022-01-01 12-16-38 Malta DSF0005 2.jpg",
-    "artist": "Ralf Roletschek",
-    "license": "CC BY-SA 1.0 fi",
-    "source": "https://commons.wikimedia.org/wiki/File:2022-01-01_12-16-38_Malta_DSF0005_2.jpg"
-  }
+  "ramla_bay": [
+    {
+      "title": "File:Bahía de Ramla desde la cueva de Calipso, isla de Gozo, Malta, 2021-08-22, DD 02.jpg",
+      "artist": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_Ramla_desde_la_cueva_de_Calipso,_isla_de_Gozo,_Malta,_2021-08-22,_DD_02.jpg"
+    },
+    {
+      "title": "File:West view of Ramla Bay, Gozo 20110428 1.jpg",
+      "artist": "DXR",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:West_view_of_Ramla_Bay,_Gozo_20110428_1.jpg"
+    }
+  ],
+  "san_blas": [
+    {
+      "title": "File:San Blas Bay.JPG",
+      "artist": "Erik1980",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:San_Blas_Bay.JPG"
+    }
+  ],
+  "hondoq": [
+    {
+      "title": "File:Rummien Ħondoq ir-Rummien 04.jpg",
+      "artist": "Continentaleurope",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Rummien_%C4%A6ondoq_ir-Rummien_04.jpg"
+    }
+  ],
+  "wied_ilghasri": [
+    {
+      "title": "File:Wied Il-Għasri, isla de Gozo, Malta, 2021-08-23, DD 02-06 PAN.jpg",
+      "artist": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wied_Il-G%C4%A7asri,_isla_de_Gozo,_Malta,_2021-08-23,_DD_02-06_PAN.jpg"
+    }
+  ],
+  "dwejra": [
+    {
+      "title": "File:Cave back to the Inland Sea (26155892630).jpg",
+      "artist": "portengaround",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Cave_back_to_the_Inland_Sea_(26155892630).jpg"
+    }
+  ],
+  "mgarr_ixxini": [
+    {
+      "title": "File:Bahía de Mġarr ix-Xini, isla de Gozo, Malta, 2021-08-23, DD 41.jpg",
+      "artist": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_M%C4%A1arr_ix-Xini,_isla_de_Gozo,_Malta,_2021-08-23,_DD_41.jpg"
+    }
+  ],
+  "xlendi": [
+    {
+      "title": "File:Bahía de Xlendi, isla de Gozo, Malta, 2021-08-22, DD 84.jpg",
+      "artist": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_Xlendi,_isla_de_Gozo,_Malta,_2021-08-22,_DD_84.jpg"
+    }
+  ],
+  "marsalforn": [
+    {
+      "title": "File:Marsalforn, Gozo Sunset.jpg",
+      "artist": "Borgden",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Marsalforn,_Gozo_Sunset.jpg"
+    }
+  ],
+  "ggantija": [
+    {
+      "title": "File:Templo de Ġgantija, isla de Gozo, Malta, 2021-08-23, DD 17.jpg",
+      "artist": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Templo_de_%C4%A0gantija,_isla_de_Gozo,_Malta,_2021-08-23,_DD_17.jpg"
+    },
+    {
+      "title": "File:Templo de Ġgantija, isla de Gozo, Malta, 2021-08-23, DD 37.jpg",
+      "artist": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Templo_de_%C4%A0gantija,_isla_de_Gozo,_Malta,_2021-08-23,_DD_37.jpg"
+    }
+  ],
+  "cittadella": [
+    {
+      "title": "File:\"The Bastions\", Citadel, Gozo-Photo by Gino Galea.jpg",
+      "artist": "Gino Galea",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:%22The_Bastions%22,_Citadel,_Gozo-Photo_by_Gino_Galea.jpg"
+    },
+    {
+      "title": "File:Sunset at the Citadel, Victoria,Gozo- Photo by Gino Galea.jpg",
+      "artist": "Gino Galea",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sunset_at_the_Citadel,_Victoria,Gozo-_Photo_by_Gino_Galea.jpg"
+    }
+  ],
+  "comino_lagoons": [
+    {
+      "title": "File:Malta - Ghajnsielem - Comino + Large Blue Lagoon Rock + Cominotto + Blue Lagoon + Gozo (St. Mary's Tower) 01 ies.jpg",
+      "artist": "Frank Vincentz",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Malta_-_Ghajnsielem_-_Comino_%2B_Large_Blue_Lagoon_Rock_%2B_Cominotto_%2B_Blue_Lagoon_%2B_Gozo_(St._Mary%27s_Tower)_01_ies.jpg"
+    },
+    {
+      "title": "File:Malta - Ghajnsielem - Cominotto + Blue Lagoon (Comino) 02 ies.jpg",
+      "artist": "Frank Vincentz",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Malta_-_Ghajnsielem_-_Cominotto_%2B_Blue_Lagoon_(Comino)_02_ies.jpg"
+    }
+  ],
+  "marsaxlokk": [
+    {
+      "title": "File:Malta Marsaxlokk BW 011-10-04 14-40-27.JPG",
+      "artist": "Berthold Werner",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Malta_Marsaxlokk_BW_011-10-04_14-40-27.JPG"
+    }
+  ],
+  "qala_belvedere": [
+    {
+      "title": "File:Comino.png",
+      "artist": "Saviour Bonnici",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Comino.png"
+    }
+  ],
+  "st_peters_pool": [
+    {
+      "title": "File:Coastal Erosion, St Peter's Pool, Delimara, Malta.jpg",
+      "artist": "Christian Formosa",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Coastal_Erosion,_St_Peter%27s_Pool,_Delimara,_Malta.jpg"
+    }
+  ],
+  "calypso_cave": [
+    {
+      "title": "File:Bahía de Ramla desde la cueva de Calipso, isla de Gozo, Malta, 2021-08-22, DD 01.jpg",
+      "artist": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_Ramla_desde_la_cueva_de_Calipso,_isla_de_Gozo,_Malta,_2021-08-22,_DD_01.jpg"
+    },
+    {
+      "title": "File:Ramla Bay from Calypso's Cave.jpg",
+      "artist": "Gabriel Treeby Coleiro",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ramla_Bay_from_Calypso%27s_Cave.jpg"
+    }
+  ],
+  "belancourt_battery": [
+    {
+      "title": "File:Ramla Left Battery, Ramla Bay 001.jpg",
+      "artist": "Matthew Axiak",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ramla_Left_Battery,_Ramla_Bay_001.jpg"
+    }
+  ],
+  "roman_villa": [
+    {
+      "title": "File:Ramla l-Hamra c1910.jpg",
+      "artist": "Unknown author",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Ramla_l-Hamra_c1910.jpg"
+    }
+  ],
+  "fungus_rock": [
+    {
+      "title": "File:Fungus Rock, Dwejra (Gozo).jpg",
+      "artist": "Zulimark",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Fungus_Rock,_Dwejra_(Gozo).jpg"
+    }
+  ],
+  "azure_window": [
+    {
+      "title": "File:Azure window on the Gozo island a day before the collapse.jpg",
+      "artist": "Vitold Muratov",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Azure_window_on_the_Gozo_island_a_day_before_the_collapse.jpg"
+    },
+    {
+      "title": "File:Azure Window, Gozo 1 (25663050952).jpg",
+      "artist": "VillageHero from Ulm, Germany",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Azure_Window,_Gozo_1_(25663050952).jpg"
+    }
+  ],
+  "wolseley_battery": [
+    {
+      "title": "File:Wolseley Battery pillbox, Marsaxlokk 001.jpg",
+      "artist": "Matthew Axiak",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wolseley_Battery_pillbox,_Marsaxlokk_001.jpg"
+    }
+  ],
+  "tas_salvatur": [
+    {
+      "title": "File:Risen Christ Statue on The Redeemer Hill, Gozo.jpg",
+      "artist": "Jonathan Mercieca",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Risen_Christ_Statue_on_The_Redeemer_Hill,_Gozo.jpg"
+    }
+  ],
+  "marsalforn_tower": [
+    {
+      "title": "File:Last Marsalforn Tower.jpg",
+      "artist": "Author only mentioned: Michele Farrugia (author) in Bonello, Giovanni (2007). Nostalgias of Gozo. Valletta: Fondazzjoni Patrimonju Malti. p. 97. ISBN 9789993271611.",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Last_Marsalforn_Tower.jpg"
+    },
+    {
+      "title": "File:Fra Luigi Bartolo, CARTA E VEDUTA DELL’ISOLE DEL GOZO E COMINO, c.1745.jpg",
+      "artist": "Fra Luigi Bartolo",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Fra_Luigi_Bartolo,_CARTA_E_VEDUTA_DELL%E2%80%99ISOLE_DEL_GOZO_E_COMINO,_c.1745.jpg"
+    }
+  ],
+  "gironda_battery": [
+    {
+      "title": "File:Ramla Right Battery, Ramla Bay 001.jpg",
+      "artist": "Matthew Axiak",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ramla_Right_Battery,_Ramla_Bay_001.jpg"
+    }
+  ],
+  "ta_mixta_cave": [
+    {
+      "title": "File:2022-01-01 12-16-38 Malta DSF0005 2.jpg",
+      "artist": "Ralf Roletschek",
+      "license": "CC BY-SA 1.0 fi",
+      "source": "https://commons.wikimedia.org/wiki/File:2022-01-01_12-16-38_Malta_DSF0005_2.jpg"
+    }
+  ]
 }

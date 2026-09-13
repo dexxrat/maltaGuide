@@ -5,7 +5,8 @@ const STORAGE_KEYS = {
   radius: 'mg_radius',
   simMode: 'mg_simMode',
   voiceRu: 'mg_voice_ru',
-  voiceEn: 'mg_voice_en'
+  voiceEn: 'mg_voice_en',
+  rate: 'mg_rate'
 };
 
 const DEFAULT_RADIUS = 150;
@@ -17,7 +18,7 @@ let state = {
   lang: localStorage.getItem(STORAGE_KEYS.lang) || 'ru',
   visited: JSON.parse(localStorage.getItem(STORAGE_KEYS.visited) || '[]'),
   radius: Number(localStorage.getItem(STORAGE_KEYS.radius)) || DEFAULT_RADIUS,
-  simMode: localStorage.getItem(STORAGE_KEYS.simMode) !== 'false', // default true (simulation on)
+  simMode: localStorage.getItem(STORAGE_KEYS.simMode) === 'true', // default false (real GPS) — simulation is an opt-in testing tool
   pois: [],
   i18n: null,
   map: null,
@@ -32,7 +33,8 @@ let state = {
   voicePrefs: {
     ru: localStorage.getItem(STORAGE_KEYS.voiceRu) || null,
     en: localStorage.getItem(STORAGE_KEYS.voiceEn) || null
-  }
+  },
+  rate: Number(localStorage.getItem(STORAGE_KEYS.rate)) || 1
 };
 
 // ---------- Persistence helpers ----------
@@ -79,6 +81,8 @@ function applyStaticI18n() {
   document.getElementById('startHint').textContent = t('startHint');
   document.getElementById('tabMapBtn').textContent = t('tabMap');
   document.getElementById('tabListBtn').textContent = t('tabList');
+  document.getElementById('voiceSettingsLabel').textContent = t('voiceSettings');
+  document.getElementById('rateLabel').textContent = t('rateLabel');
   document.getElementById('simulateLabel').textContent = t('simulateLabel');
   document.getElementById('teleportBtn').textContent = t('teleportBtn');
   document.getElementById('replayBtn').textContent = t('replayBtn');
@@ -251,18 +255,64 @@ function renderList() {
 
 // ---------- POI Card ----------
 let activePoi = null;
+let activePhotoIndex = 0;
+
+function renderPhotoCarousel(poi) {
+  const photoEl = document.getElementById('poiPhoto');
+  const photos = poi.photos && poi.photos.length ? poi.photos : null;
+
+  if (!photos) {
+    photoEl.innerHTML = poi.icon;
+    return;
+  }
+
+  if (activePhotoIndex >= photos.length) activePhotoIndex = 0;
+  if (activePhotoIndex < 0) activePhotoIndex = photos.length - 1;
+
+  const dots = photos.length > 1
+    ? `<div class="photo-dots">${photos.map((_, i) =>
+        `<button class="photo-dot${i === activePhotoIndex ? ' active' : ''}" data-index="${i}" aria-label="photo ${i + 1}"></button>`
+      ).join('')}</div>`
+    : '';
+  const arrows = photos.length > 1
+    ? `<button class="photo-nav photo-nav-prev" aria-label="previous photo">‹</button>
+       <button class="photo-nav photo-nav-next" aria-label="next photo">›</button>`
+    : '';
+
+  photoEl.innerHTML = `
+    <img src="${photos[activePhotoIndex]}" alt="${poiName(poi)}" onerror="this.parentElement.innerHTML='${poi.icon}'">
+    ${arrows}
+    ${dots}
+  `;
+
+  if (photos.length > 1) {
+    photoEl.querySelector('.photo-nav-prev').addEventListener('click', e => {
+      e.stopPropagation();
+      activePhotoIndex--;
+      renderPhotoCarousel(poi);
+    });
+    photoEl.querySelector('.photo-nav-next').addEventListener('click', e => {
+      e.stopPropagation();
+      activePhotoIndex++;
+      renderPhotoCarousel(poi);
+    });
+    photoEl.querySelectorAll('.photo-dot').forEach(dot => {
+      dot.addEventListener('click', e => {
+        e.stopPropagation();
+        activePhotoIndex = Number(dot.dataset.index);
+        renderPhotoCarousel(poi);
+      });
+    });
+  }
+}
 
 function showPoiCard(poi, opts = {}) {
   activePoi = poi;
+  activePhotoIndex = 0;
   document.getElementById('poiName').textContent = poiName(poi);
   document.getElementById('poiText').textContent = poiText(poi);
 
-  const photoEl = document.getElementById('poiPhoto');
-  if (poi.photos && poi.photos.length) {
-    photoEl.innerHTML = `<img src="${poi.photos[0]}" alt="${poiName(poi)}" onerror="this.parentElement.innerHTML='${poi.icon}'">`;
-  } else {
-    photoEl.innerHTML = poi.icon;
-  }
+  renderPhotoCarousel(poi);
 
   document.getElementById('poiCard').classList.remove('hidden');
   speak(poiText(poi));
@@ -297,7 +347,35 @@ function speak(text, langOverride) {
   utter.lang = lang === 'ru' ? 'ru-RU' : 'en-US';
   const voice = pickVoiceFor(lang);
   if (voice) utter.voice = voice;
+  utter.rate = state.rate;
   window.speechSynthesis.speak(utter);
+}
+
+// A short two-tone chime so a proximity trigger is noticeable even with the
+// phone in a pocket. Synthesized on the spot — no audio file to precache.
+function playChime() {
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    const ctx = new Ctx();
+    const now = ctx.currentTime;
+    [880, 1320].forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      const start = now + i * 0.14;
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(0.25, start + 0.02);
+      gain.gain.linearRampToValueAtTime(0, start + 0.15);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + 0.16);
+    });
+    setTimeout(() => ctx.close(), 500);
+  } catch (e) {
+    console.warn('Chime failed', e);
+  }
 }
 
 // ---------- Voice selection (pick the best free voice available on this device) ----------
@@ -421,6 +499,18 @@ function initVoicePickers() {
       });
     }
   });
+
+  const rateSlider = document.getElementById('rateSlider');
+  const rateValue = document.getElementById('rateValue');
+  if (rateSlider) {
+    rateSlider.value = state.rate;
+    rateValue.textContent = state.rate.toFixed(2).replace(/0$/, '') + '×';
+    rateSlider.addEventListener('input', () => {
+      state.rate = Number(rateSlider.value);
+      rateValue.textContent = state.rate.toFixed(2).replace(/0$/, '') + '×';
+      localStorage.setItem(STORAGE_KEYS.rate, String(state.rate));
+    });
+  }
 }
 
 function initPoiCardControls() {
@@ -500,6 +590,7 @@ function checkProximity() {
       state.insideRadius.add(poi.id);
       const cardHidden = document.getElementById('poiCard').classList.contains('hidden');
       if (cardHidden) {
+        playChime();
         showPoiCard(poi, { markVisit: true });
       }
     } else if (!isInside && wasInside) {
@@ -567,8 +658,6 @@ function initDevPanel() {
     renderList();
     updateMarkerStyles();
   });
-
-  if (!state.simMode) startRealGps();
 }
 
 // ---------- Service worker ----------

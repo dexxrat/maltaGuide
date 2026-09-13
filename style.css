@@ -116,6 +116,33 @@ html, body {
   cursor: pointer;
 }
 
+.rate-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 18px;
+}
+
+.rate-label {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.rate-row input[type="range"] {
+  flex: 1;
+  min-width: 0;
+}
+
+.rate-value {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--sea);
+  width: 34px;
+  text-align: right;
+}
+
 .primary-btn {
   width: 100%;
   padding: 14px;
@@ -362,6 +389,7 @@ main {
 }
 
 .poi-photo {
+  position: relative;
   width: 100%;
   height: 160px;
   border-radius: 14px;
@@ -372,6 +400,50 @@ main {
   font-size: 4rem;
   margin-bottom: 14px;
   color: #fff;
+}
+
+.photo-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.photo-nav-prev { left: 8px; }
+.photo-nav-next { right: 8px; }
+
+.photo-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.photo-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.5);
+  padding: 0;
+  cursor: pointer;
+}
+
+.photo-dot.active {
+  background: #fff;
+  width: 9px;
+  height: 9px;
 }
 
 .poi-photo img {
