@@ -281,6 +281,19 @@
       "photos": [
         "assets/photos/tas_salvatur.jpg"
       ]
+    },
+    {
+      "id": "marsalforn_tower",
+      "name": "Marsalforn Tower (site)",
+      "category": "historic",
+      "icon": "🗼",
+      "lat": 36.07088889,
+      "lng": 14.26522222,
+      "coordsVerified": true,
+      "coordsNote": "Coordinates from the Wikipedia infobox for Marsalforn Tower. About 490m from the marsalforn POI, so treat it as part of that cluster rather than walkable from Ramla right now.",
+      "photos": [
+        "assets/photos/marsalforn_tower.jpg"
+      ]
     }
   ]
 }
