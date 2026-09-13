@@ -1,4 +1,4 @@
-const CACHE_NAME = 'malta-guide-v8';
+const CACHE_NAME = 'malta-guide-v9';
 
 const POI_IDS = [
   'ramla_bay', 'san_blas', 'hondoq', 'wied_ilghasri', 'dwejra', 'mgarr_ixxini',
