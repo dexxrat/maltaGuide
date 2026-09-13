@@ -19,3 +19,7 @@ All photos are from Wikimedia Commons under free licenses. Attribution kept here
 - **Calypso's Cave** — Diego Delso, CC BY-SA 4.0. [Bahía de Ramla desde la cueva de Calipso, isla de Gozo, Malta, 2021-08-22, DD 01.jpg](https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_Ramla_desde_la_cueva_de_Calipso,_isla_de_Gozo,_Malta,_2021-08-22,_DD_01.jpg)
 - **Ramla Bay Roman Villa** — Unknown author, Public domain. [Ramla l-Hamra c1910.jpg](https://commons.wikimedia.org/wiki/File:Ramla_l-Hamra_c1910.jpg)
 - **Belancourt Battery** — Matthew Axiak, CC BY-SA 4.0. [Ramla Left Battery, Ramla Bay 001.jpg](https://commons.wikimedia.org/wiki/File:Ramla_Left_Battery,_Ramla_Bay_001.jpg)
+- **Fungus Rock** — Zulimark, CC BY-SA 4.0. [Fungus Rock, Dwejra (Gozo).jpg](https://commons.wikimedia.org/wiki/File:Fungus_Rock,_Dwejra_(Gozo).jpg)
+- **Azure Window (collapsed)** — Vitold Muratov, CC BY-SA 4.0. [Azure window on the Gozo island a day before the collapse.jpg](https://commons.wikimedia.org/wiki/File:Azure_window_on_the_Gozo_island_a_day_before_the_collapse.jpg)
+- **Wolseley Battery** — Matthew Axiak, CC BY-SA 4.0. [Wolseley Battery pillbox, Marsaxlokk 001.jpg](https://commons.wikimedia.org/wiki/File:Wolseley_Battery_pillbox,_Marsaxlokk_001.jpg)
+- **Tas-Salvatur (Risen Christ statue)** — Jonathan Mercieca, CC BY-SA 4.0. [Risen Christ Statue on The Redeemer Hill, Gozo.jpg](https://commons.wikimedia.org/wiki/File:Risen_Christ_Statue_on_The_Redeemer_Hill,_Gozo.jpg)

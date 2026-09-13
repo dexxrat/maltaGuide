@@ -100,5 +100,29 @@
     "artist": "Unknown author",
     "license": "Public domain",
     "source": "https://commons.wikimedia.org/wiki/File:Ramla_l-Hamra_c1910.jpg"
+  },
+  "fungus_rock": {
+    "title": "File:Fungus Rock, Dwejra (Gozo).jpg",
+    "artist": "Zulimark",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fungus_Rock,_Dwejra_(Gozo).jpg"
+  },
+  "azure_window": {
+    "title": "File:Azure window on the Gozo island a day before the collapse.jpg",
+    "artist": "Vitold Muratov",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Azure_window_on_the_Gozo_island_a_day_before_the_collapse.jpg"
+  },
+  "wolseley_battery": {
+    "title": "File:Wolseley Battery pillbox, Marsaxlokk 001.jpg",
+    "artist": "Matthew Axiak",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wolseley_Battery_pillbox,_Marsaxlokk_001.jpg"
+  },
+  "tas_salvatur": {
+    "title": "File:Risen Christ Statue on The Redeemer Hill, Gozo.jpg",
+    "artist": "Jonathan Mercieca",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Risen_Christ_Statue_on_The_Redeemer_Hill,_Gozo.jpg"
   }
 }

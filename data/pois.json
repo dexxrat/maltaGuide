@@ -228,6 +228,59 @@
       "photos": [
         "assets/photos/belancourt_battery.jpg"
       ]
+    },
+    {
+      "id": "fungus_rock",
+      "name": "Fungus Rock",
+      "category": "historic",
+      "icon": "🪨",
+      "lat": 36.04693,
+      "lng": 14.1888,
+      "coordsVerified": true,
+      "coordsNote": "OSM tourism=attraction node (Il-Ġebla tal-Ġeneral), matches Wikipedia coordinates for Fungus Rock.",
+      "photos": [
+        "assets/photos/fungus_rock.jpg"
+      ]
+    },
+    {
+      "id": "azure_window",
+      "name": "Azure Window (collapsed)",
+      "category": "historic",
+      "icon": "🌉",
+      "lat": 36.05356,
+      "lng": 14.18826,
+      "radius": 60,
+      "coordsVerified": true,
+      "coordsNote": "OSM tourism=attraction node with wikipedia=en:Azure Window tag. Only ~112m from dwejra, so it will usually trigger alongside it — expected given how close they really are.",
+      "photos": [
+        "assets/photos/azure_window.jpg"
+      ]
+    },
+    {
+      "id": "wolseley_battery",
+      "name": "Wolseley Battery",
+      "category": "historic",
+      "icon": "🏛️",
+      "lat": 35.83573,
+      "lng": 14.55794,
+      "coordsVerified": true,
+      "coordsNote": "OSM historic=castle node with wikipedia=en:Wolseley Battery tag, near St Peter's Pool.",
+      "photos": [
+        "assets/photos/wolseley_battery.jpg"
+      ]
+    },
+    {
+      "id": "tas_salvatur",
+      "name": "Tas-Salvatur (Risen Christ statue)",
+      "category": "viewpoint",
+      "icon": "⛰️",
+      "lat": 36.06649,
+      "lng": 14.25438,
+      "coordsVerified": true,
+      "coordsNote": "OSM historic=memorial node (statue), above Marsalforn.",
+      "photos": [
+        "assets/photos/tas_salvatur.jpg"
+      ]
     }
   ]
 }

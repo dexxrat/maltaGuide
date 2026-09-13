@@ -77,6 +77,18 @@
       },
       "belancourt_battery": {
         "text": "Батарея Беланкур, она же Ramla Left Battery, была построена рыцарями ордена Святого Иоанна в 1715–1716 годах — часть цепи береговых укреплений, защищавших Мальтийские острова. Сегодня от неё остались только руины на холме над пляжем Рамла."
+      },
+      "fungus_rock": {
+        "text": "Вот эта скала посреди лагуны — знаменитый Fungus Rock, по-мальтийски Il-Ġebla tal-Ġeneral, «Скала генерала». Высота — 60 метров, и когда-то на её плоской вершине рыцари ордена Святого Иоанна нашли редкое паразитическое растение, которое прозвали «мальтийским грибом», хотя грибом оно не было. Считалось, что оно останавливает кровотечение и лечит дизентерию, и рыцари дарили его знатным гостям как драгоценность. В 1746 году великий магистр Пинто объявил скалу запретной зоной: попавшихся ждали три года на галерах в качестве гребцов. На скалу поставили постоянную охрану, стены специально сделали гладкими, чтобы не за что было ухватиться при подъёме, а для доступа построили нечто вроде подвесной корзины на тросе. Сегодня скала — заповедник, но воды вокруг неё открыты для купания и считаются одним из лучших мест для снорклинга в Двейре."
+      },
+      "azure_window": {
+        "text": "Здесь, у самого края воды, когда-то стояла Azure Window — знаменитая природная арка высотой 28 метров, одна из главных достопримечательностей Мальты. Учёные считают, что море формировало её около 500 лет. В 2010-х от арки постепенно откалывались куски: в 2012 году обвалилась крупная плита, в 2013-м ещё часть. Экспертиза в том же году назвала арку «относительно стабильной», но предупредила о риске новых обвалов. В марте 2016 года эксперт даже говорил, что нелегальные взрывные работы у соседнего Внутреннего моря могли расшатать и без того слабую конструкцию. В декабре 2016 года власти официально запретили заходить на арку под угрозой штрафа в полторы тысячи евро, но люди всё равно продолжали фотографироваться на ней буквально за несколько дней до конца. Утром 8 марта 2017 года, около половины десятого, во время сильного шторма арка обрушилась в море — сначала не выдержала опора, а за ней и весь свод. Об этом писали премьер-министр Мальты и лидер оппозиции, событие обсуждала вся страна. Сегодня на этом месте только открытое море."
+      },
+      "wolseley_battery": {
+        "text": "Эта батарея построена британцами между 1897 и 1899 годами — уже после рыцарей, в эпоху, когда Мальта была важной военно-морской базой Британской империи. Стоит она рядом с фортом Тас-Силдж и должна была прикрывать этот участок побережья от вражеских кораблей. Внутрь сегодня не попасть — сооружение закрыто, но снаружи хорошо видно, как военная архитектура конца девятнадцатого века вписана прямо в скалы над морем."
+      },
+      "tas_salvatur": {
+        "text": "На холме над Марсалфорном стоит статуя Христа Спасителя — местные называют это место Tas-Salvatur, «холм Спасителя». Отсюда, с одной из самых высоких точек Гозо, открывается вид сразу на несколько бухт северного побережья. Место известное: сюда приходят и туристы, и местные жители, особенно ради заката."
       }
     }
   },
@@ -158,6 +170,18 @@
       },
       "belancourt_battery": {
         "text": "Belancourt Battery, officially Ramla Left Battery, was built by the Knights of the Order of Saint John in 1715-1716 as part of a chain of coastal fortifications defending the Maltese Islands. Only ruins remain today, on the hill above Ramla beach."
+      },
+      "fungus_rock": {
+        "text": "That rock in the middle of the lagoon is the famous Fungus Rock, in Maltese Il-Ġebla tal-Ġeneral, 'the General's Rock'. It stands 60 metres tall, and its flat top was once home to a rare parasitic plant the Knights of St John called the 'Maltese fungus', even though it isn't a fungus at all. They believed it stopped bleeding and cured dysentery, and prized it enough to give as gifts to noble visitors. In 1746, Grand Master Pinto declared the rock strictly off-limits: anyone caught trespassing faced three years as an oarsman on the Knights' galleys. He posted a permanent guard, had the sides smoothed so nobody could climb up, and even rigged a cable-basket to ferry people across. Today it's a nature reserve, but the water around it is open for swimming and is considered some of the best snorkeling in Dwejra."
+      },
+      "azure_window": {
+        "text": "Right at the water's edge here once stood the Azure Window, a famous 28-metre natural stone arch and one of Malta's biggest attractions. Geologists think the sea sculpted it over roughly 500 years. Through the 2010s, pieces kept breaking off: a large slab collapsed in 2012, another chunk in 2013. A 2013 engineering report called the arch 'relatively stable' but warned that rockfalls would continue. In March 2016, an expert warned that illegal blasting near the nearby Inland Sea might have weakened the already fragile structure. By December 2016, walking on the arch was officially banned, with a 1500 euro fine, yet people kept climbing onto it for photos right up until days before the end. At around 9:40 in the morning on 8 March 2017, during a heavy storm, the arch finally collapsed into the sea, the pillar giving way first and taking the rest down with it. Malta's prime minister and the opposition leader both wrote about it that day; the whole country was talking about it. Today, there's only open water where it stood."
+      },
+      "wolseley_battery": {
+        "text": "This battery was built by the British between 1897 and 1899, well after the Knights' era, back when Malta was a key naval base of the British Empire. It sits right next to Fort Tas-Silġ and was meant to guard this stretch of coastline against enemy ships. You can't go inside today, it's closed to the public, but from outside you can clearly see how this late-19th-century military architecture was built straight into the cliffs above the sea."
+      },
+      "tas_salvatur": {
+        "text": "On the hill above Marsalforn stands a statue of the Risen Christ; locals call the spot Tas-Salvatur, 'the Saviour's Hill'. From one of Gozo's highest points, you get a view over several bays along the north coast at once. It's a well-known local spot, popular with both visitors and residents, especially around sunset."
       }
     }
   }
