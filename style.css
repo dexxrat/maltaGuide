@@ -216,6 +216,62 @@ main {
 
 .poi-marker.visited { opacity: 0.55; }
 
+/* ---------- USER POSITION MARKER ---------- */
+.user-marker-wrap { position: relative; }
+
+.user-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #2a6fdb;
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+.user-dot-pulse {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(42, 111, 219, 0.35);
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: user-pulse 2s ease-out infinite;
+}
+
+@keyframes user-pulse {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.user-arrow {
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 20px solid #2a6fdb;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+  transform-origin: 50% 65%;
+}
+
+.center-me-btn {
+  position: absolute;
+  right: 14px;
+  bottom: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 500;
+  cursor: pointer;
+}
+
 /* ---------- LIST ---------- */
 .poi-list {
   list-style: none;

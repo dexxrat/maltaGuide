@@ -22,6 +22,7 @@ let state = {
   i18n: null,
   map: null,
   markers: {},
+  userMarker: null,
   currentPos: null, // {lat, lng}
   watchId: null,
   proximityTimer: null,
@@ -131,6 +132,11 @@ function onStart() {
 function initTabs() {
   document.getElementById('tabMapBtn').addEventListener('click', () => switchTab('map'));
   document.getElementById('tabListBtn').addEventListener('click', () => switchTab('list'));
+  document.getElementById('centerMeBtn').addEventListener('click', () => {
+    if (state.currentPos && state.map) {
+      state.map.panTo([state.currentPos.lat, state.currentPos.lng]);
+    }
+  });
 }
 function switchTab(tab) {
   document.getElementById('mapView').classList.toggle('hidden', tab !== 'map');
@@ -165,6 +171,42 @@ function initMap() {
   });
 
   updateMarkerStyles();
+}
+
+// ---------- Live "you are here" marker ----------
+function userDotIcon() {
+  return L.divIcon({
+    className: 'user-marker-wrap',
+    html: `<div class="user-dot"></div><div class="user-dot-pulse"></div>`,
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  });
+}
+
+function userArrowIcon(headingDeg) {
+  return L.divIcon({
+    className: 'user-marker-wrap',
+    html: `<div class="user-arrow" style="transform: rotate(${headingDeg}deg)"></div>`,
+    iconSize: [26, 26],
+    iconAnchor: [13, 13]
+  });
+}
+
+// pos: {lat, lng}; headingDeg: number|null|undefined (compass heading, 0=north, only
+// available from real GPS while moving — the simulator has no heading, so we fall
+// back to a plain dot rather than show a misleading direction).
+function updateUserMarker(pos, headingDeg) {
+  if (!state.map) return;
+  const hasHeading = typeof headingDeg === 'number' && !Number.isNaN(headingDeg);
+  const icon = hasHeading ? userArrowIcon(headingDeg) : userDotIcon();
+
+  if (!state.userMarker) {
+    state.userMarker = L.marker([pos.lat, pos.lng], { icon, zIndexOffset: 1000 }).addTo(state.map);
+    state.map.panTo([pos.lat, pos.lng]);
+  } else {
+    state.userMarker.setLatLng([pos.lat, pos.lng]);
+    state.userMarker.setIcon(icon);
+  }
 }
 
 function updateMarkerStyles() {
@@ -236,11 +278,22 @@ function hidePoiCard() {
   activePoi = null;
 }
 
+// Strips anything that reads awkwardly out loud (parenthetical asides, quote
+// marks) from the TEXT-TO-SPEECH input only — the visible card text is untouched.
+function sanitizeForSpeech(text) {
+  return text
+    .replace(/\([^)]*\)/g, ' ')   // (asides) — drop the whole aside
+    .replace(/\[[^\]]*\]/g, ' ')  // [asides]
+    .replace(/[«»""„"]/g, '')     // quote marks — keep the words, drop the marks
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
 function speak(text, langOverride) {
   if (!('speechSynthesis' in window) || !text) return;
   const lang = langOverride || state.lang;
   window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
+  const utter = new SpeechSynthesisUtterance(sanitizeForSpeech(text));
   utter.lang = lang === 'ru' ? 'ru-RU' : 'en-US';
   const voice = pickVoiceFor(lang);
   if (voice) utter.voice = voice;
@@ -398,6 +451,7 @@ function startRealGps() {
   state.watchId = navigator.geolocation.watchPosition(
     pos => {
       state.currentPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      updateUserMarker(state.currentPos, pos.coords.heading);
       checkProximity();
     },
     err => {
@@ -493,6 +547,7 @@ function initDevPanel() {
     const poi = state.pois.find(p => p.id === select.value);
     if (!poi) return;
     state.currentPos = { lat: poi.lat, lng: poi.lng };
+    updateUserMarker(state.currentPos, null);
     checkProximity();
   });
 
