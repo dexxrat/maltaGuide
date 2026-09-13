@@ -1,4 +1,4 @@
-const CACHE_NAME = 'malta-guide-v15';
+const CACHE_NAME = 'malta-guide-v16';
 
 // Static app-shell files. Photo paths are no longer hardcoded here — they're
 // read straight out of data/pois.json at install time, so adding a photo (or
@@ -34,6 +34,19 @@ async function getPoisData() {
 function getPhotoUrls(pois) {
   const urls = [];
   pois.forEach(poi => (poi.photos || []).forEach(p => urls.push('./' + p)));
+  return urls;
+}
+
+// Pre-rendered narration (see scratchpad/generate_audio.py — edge-tts, one
+// fixed voice per language) lives at assets/audio/<id>_<lang>.mp3, one file
+// per POI per language. Same "derive from pois.json, nothing hand-maintained"
+// approach as photos above.
+function getAudioUrls(pois) {
+  const urls = [];
+  pois.forEach(poi => {
+    urls.push(`./assets/audio/${poi.id}_ru.mp3`);
+    urls.push(`./assets/audio/${poi.id}_en.mp3`);
+  });
   return urls;
 }
 
@@ -91,8 +104,9 @@ self.addEventListener('install', event => {
       const cache = await caches.open(CACHE_NAME);
       const pois = await getPoisData();
       const photoUrls = getPhotoUrls(pois);
+      const audioUrls = getAudioUrls(pois);
       const tileUrls = getMapTileUrls(pois);
-      const allUrls = PRECACHE_URLS.concat(photoUrls, tileUrls);
+      const allUrls = PRECACHE_URLS.concat(photoUrls, audioUrls, tileUrls);
       // Tiles are many small requests to a third-party server — cap how many
       // are in flight at once instead of firing everything simultaneously.
       const CONCURRENCY = 12;

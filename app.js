@@ -4,8 +4,6 @@ const STORAGE_KEYS = {
   visited: 'mg_visited',
   radius: 'mg_radius',
   simMode: 'mg_simMode',
-  voiceRu: 'mg_voice_ru',
-  voiceEn: 'mg_voice_en',
   rate: 'mg_rate'
 };
 
@@ -29,18 +27,23 @@ let state = {
   proximityTimer: null,
   insideRadius: new Set(), // ids currently inside radius (to avoid re-trigger spam)
   audioUnlocked: false,
-  voices: [], // cached SpeechSynthesisVoice[]
-  voicePrefs: {
-    ru: localStorage.getItem(STORAGE_KEYS.voiceRu) || null,
-    en: localStorage.getItem(STORAGE_KEYS.voiceEn) || null
-  },
-  rate: Number(localStorage.getItem(STORAGE_KEYS.rate)) || 1,
-  // Web Speech API has no real seekable timeline (it's synthesized live, not
-  // a decoded audio file), so "seeking" means: remember roughly how far into
-  // the sanitized text we've gotten (via onboundary word events) and, to
-  // seek/resume/change rate, cancel and re-speak from that character offset.
-  playback: { fullText: '', lang: 'ru', charIndex: 0, playing: false, charsPerSecond: null }
+  rate: Number(localStorage.getItem(STORAGE_KEYS.rate)) || 1
 };
+
+// Narration is pre-rendered per POI/language (via edge-tts, see
+// scratchpad/generate_audio.py) into assets/audio/<id>_<lang>.mp3, and played
+// through one shared <audio> element. This gives a real decoded timeline
+// (accurate currentTime/duration for seeking — no more estimating "characters
+// per second"), and — critically — lets narration keep playing with the
+// screen locked or the app backgrounded via the Media Session API, which
+// speechSynthesis could never do on iOS/Android.
+const audioEl = new Audio();
+audioEl.preload = 'auto';
+// A ~0 length silent WAV, played+paused synchronously inside the start
+// button's click handler, to unlock this <audio> element for later
+// programmatic .play() calls on iOS Safari (which otherwise requires every
+// play() to originate from a user gesture).
+const SILENT_AUDIO_SRC = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
 
 // ---------- Persistence helpers ----------
 function saveVisited() {
@@ -97,7 +100,6 @@ function applyStaticI18n() {
   document.getElementById('startHint').textContent = t('startHint');
   document.getElementById('tabMapBtn').textContent = t('tabMap');
   document.getElementById('tabListBtn').textContent = t('tabList');
-  document.getElementById('voiceSettingsLabel').textContent = t('voiceSettings');
   document.getElementById('simulateLabel').textContent = t('simulateLabel');
   document.getElementById('teleportBtn').textContent = t('teleportBtn');
   document.getElementById('nextBtn').textContent = t('nextBtn');
@@ -134,6 +136,7 @@ function setLanguage(lang) {
   if (activePoi) {
     document.getElementById('poiName').textContent = poiName(activePoi);
     document.getElementById('poiText').textContent = poiText(activePoi);
+    prepareNarration(activePoi, lang);
   }
 }
 
@@ -142,14 +145,17 @@ function updateLangToggleLabel() {
   if (btn) btn.textContent = state.lang.toUpperCase();
 }
 
-function unlockSpeech() {
+function unlockAudio() {
   try {
-    const u = new SpeechSynthesisUtterance(' ');
-    u.volume = 0;
-    window.speechSynthesis.speak(u);
+    audioEl.muted = true;
+    audioEl.src = SILENT_AUDIO_SRC;
+    const p = audioEl.play();
+    const finish = () => { audioEl.pause(); audioEl.muted = false; };
+    if (p && typeof p.then === 'function') p.then(finish).catch(finish);
+    else finish();
     state.audioUnlocked = true;
   } catch (e) {
-    console.warn('Speech unlock failed', e);
+    console.warn('Audio unlock failed', e);
   }
 }
 
@@ -167,7 +173,7 @@ function isDevMode() {
 }
 
 function onStart() {
-  unlockSpeech(); // must be called synchronously inside the click handler
+  unlockAudio(); // must be called synchronously inside the click handler
   document.getElementById('startScreen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
 
@@ -374,7 +380,7 @@ function showPoiCard(poi, opts = {}) {
   renderPhotoCarousel(poi);
 
   document.getElementById('poiCard').classList.remove('hidden');
-  prepareNarration(poiText(poi), state.lang);
+  prepareNarration(poi, state.lang);
 
   if (opts.markVisit !== false) {
     markVisited(poi.id);
@@ -383,202 +389,121 @@ function showPoiCard(poi, opts = {}) {
 
 function hidePoiCard() {
   document.getElementById('poiCard').classList.add('hidden');
-  window.speechSynthesis.cancel();
+  audioEl.pause();
   activePoi = null;
-  state.playback.fullText = '';
-  state.playback.charIndex = 0;
-  state.playback.playing = false;
 }
 
-// Strips anything that reads awkwardly out loud (parenthetical asides, quote
-// marks) from the TEXT-TO-SPEECH input only — the visible card text is untouched.
-function sanitizeForSpeech(text) {
-  return text
-    .replace(/\([^)]*\)/g, ' ')   // (asides) — drop the whole aside
-    .replace(/\[[^\]]*\]/g, ' ')  // [asides]
-    .replace(/[«»""„"]/g, '')     // quote marks — keep the words, drop the marks
-    .replace(/\s{2,}/g, ' ')
-    .trim();
-}
-
-// Starts narration immediately — used for the short voice-preview samples in
-// the settings screen, where clicking ▶ IS the play command already. POI
-// cards use prepareNarration() instead, which loads the text but waits for
-// an explicit tap on the play button.
-function speak(text, langOverride) {
-  if (!('speechSynthesis' in window) || !text) return;
-  const lang = langOverride || state.lang;
-  state.playback.fullText = sanitizeForSpeech(text);
-  state.playback.lang = lang;
-  state.playback.charIndex = 0;
-  state.playback.charsPerSecond = null; // fresh text — forget the old estimate
-  speakFrom(state.playback.fullText, lang, 0);
-}
-
-// Loads a POI's text into the playback state and resets the transport UI to
-// a paused, start-of-story position — but doesn't speak a word until the
+// Loads a POI's pre-rendered narration track and resets the transport UI to
+// a paused, start-of-story position — but doesn't play a sound until the
 // user presses play. Opening a card (by walking up to it or tapping the
 // list) should never start talking on its own.
-function prepareNarration(text, lang) {
-  window.speechSynthesis.cancel();
-  state.playback.fullText = sanitizeForSpeech(text);
-  state.playback.lang = lang;
-  state.playback.charIndex = 0;
-  state.playback.charsPerSecond = null;
-  state.playback.playing = false;
+function prepareNarration(poi, lang) {
+  audioEl.pause();
+  audioEl.src = `assets/audio/${poi.id}_${lang}.mp3`;
+  audioEl.currentTime = 0;
+  audioEl.playbackRate = state.rate;
   updatePlaybackUI();
-}
-
-// The actual engine: speaks fullText starting at charOffset. Re-called
-// whenever the user seeks, changes rate, or resumes after a pause that the
-// browser didn't handle natively (iOS Safari's speechSynthesis.resume() is
-// unreliable, so this is also the fallback path for that).
-function speakFrom(fullText, lang, charOffset) {
-  if (!('speechSynthesis' in window) || !fullText) return;
-  window.speechSynthesis.cancel();
-  const remaining = fullText.slice(charOffset);
-  if (!remaining) {
-    state.playback.playing = false;
-    updatePlaybackUI();
-    return;
-  }
-  const utter = new SpeechSynthesisUtterance(remaining);
-  utter.lang = lang === 'ru' ? 'ru-RU' : 'en-US';
-  const voice = pickVoiceFor(lang);
-  if (voice) utter.voice = voice;
-  utter.rate = state.rate;
-
-  // For the ±5s skip buttons: Web Speech API has no real clock, so we
-  // measure our own — wall-clock time since this utterance started vs. how
-  // many characters it's gotten through — and use that as a live estimate
-  // of "characters per second" to convert seconds into a text offset.
-  const speechStartTime = performance.now();
-  utter.onstart = () => {
-    state.playback.playing = true;
-    updatePlaybackUI();
-  };
-  utter.onboundary = e => {
-    state.playback.charIndex = charOffset + e.charIndex;
-    const elapsedSec = (performance.now() - speechStartTime) / 1000;
-    if (elapsedSec > 0.3 && e.charIndex > 0) {
-      state.playback.charsPerSecond = e.charIndex / elapsedSec;
-    }
-    updatePlaybackUI();
-  };
-  utter.onend = () => {
-    // onend also fires when we cancel() to seek/restart elsewhere — only
-    // treat it as "finished" if we actually reached the end of the text.
-    if (state.playback.charIndex >= fullText.length - 1) {
-      state.playback.playing = false;
-      updatePlaybackUI();
-    }
-  };
-  utter.onerror = () => {
-    state.playback.playing = false;
-    updatePlaybackUI();
-  };
-  window.speechSynthesis.speak(utter);
-}
-
-// Snaps a raw character offset to the start of the nearest word, so seeking
-// never begins mid-word.
-function nearestWordStart(text, targetIndex) {
-  const re = /\S+/g;
-  let match;
-  let best = 0;
-  while ((match = re.exec(text))) {
-    if (match.index <= targetIndex) best = match.index;
-    else break;
-  }
-  return best;
+  updateMediaSessionMetadata(poi);
 }
 
 function togglePlayPause() {
-  const pb = state.playback;
-  if (!pb.fullText) return;
-
-  if (pb.playing) {
-    try { window.speechSynthesis.pause(); } catch (e) {}
-    pb.playing = false;
-    updatePlaybackUI();
-    return;
-  }
-
-  if (window.speechSynthesis.paused) {
-    window.speechSynthesis.resume();
-    pb.playing = true;
-    updatePlaybackUI();
-    // Safety net: iOS Safari sometimes silently fails to resume. If speech
-    // still isn't flowing shortly after, rebuild the utterance manually.
-    setTimeout(() => {
-      if (pb.playing && !window.speechSynthesis.speaking) {
-        speakFrom(pb.fullText, pb.lang, pb.charIndex);
-      }
-    }, 300);
+  if (!audioEl.src) return;
+  if (audioEl.paused) {
+    const p = audioEl.play();
+    if (p && p.catch) p.catch(e => console.warn('Playback failed', e));
   } else {
-    speakFrom(pb.fullText, pb.lang, pb.charIndex);
+    audioEl.pause();
   }
 }
 
 function seekToFraction(fraction) {
-  const pb = state.playback;
-  if (!pb.fullText) return;
-  const target = Math.floor(fraction * pb.fullText.length);
-  const snapped = nearestWordStart(pb.fullText, target);
-  pb.charIndex = snapped;
-  speakFrom(pb.fullText, pb.lang, snapped);
+  if (!audioEl.src || !isFinite(audioEl.duration)) return;
+  audioEl.currentTime = fraction * audioEl.duration;
 }
 
 function restartPlayback() {
-  const pb = state.playback;
-  if (!pb.fullText) return;
-  pb.charIndex = 0;
-  speakFrom(pb.fullText, pb.lang, 0);
+  if (!audioEl.src) return;
+  audioEl.currentTime = 0;
+  const p = audioEl.play();
+  if (p && p.catch) p.catch(() => {});
 }
-
-// ±5s buttons. There's no real playback clock to seek within (see the note
-// in speakFrom), so "5 seconds" is an estimate: measured characters-per-
-// second at the current rate, falling back to a rough average speaking pace
-// before we have a real measurement yet.
-const FALLBACK_CHARS_PER_SECOND = 13; // ~150 wpm at rate 1.0
 
 function skipBy(deltaSeconds) {
-  const pb = state.playback;
-  if (!pb.fullText) return;
-  const cps = pb.charsPerSecond || FALLBACK_CHARS_PER_SECOND * state.rate;
-  const deltaChars = Math.round(cps * deltaSeconds);
-  const target = Math.max(0, Math.min(pb.fullText.length - 1, pb.charIndex + deltaChars));
-  const snapped = nearestWordStart(pb.fullText, target);
-  pb.charIndex = snapped;
-  speakFrom(pb.fullText, pb.lang, snapped);
+  if (!audioEl.src || !isFinite(audioEl.duration)) return;
+  audioEl.currentTime = Math.max(0, Math.min(audioEl.duration, audioEl.currentTime + deltaSeconds));
 }
+
+// While the user is dragging the seek slider, ignore the audio element's own
+// timeupdate events so they don't fight the drag and snap the handle back.
+let isScrubbing = false;
 
 function updatePlaybackUI() {
   const playPauseBtn = document.getElementById('playPauseBtn');
   const slider = document.getElementById('progressSlider');
   if (!playPauseBtn || !slider) return; // card isn't open
-  playPauseBtn.textContent = state.playback.playing ? '⏸' : '▶';
-  const total = state.playback.fullText.length || 1;
-  const frac = Math.min(1, state.playback.charIndex / total);
+  playPauseBtn.textContent = (!audioEl.paused && !audioEl.ended) ? '⏸' : '▶';
+  if (isScrubbing) return;
+  const duration = audioEl.duration;
+  const frac = duration && isFinite(duration) ? Math.min(1, audioEl.currentTime / duration) : 0;
   slider.value = String(Math.round(frac * 1000));
+}
+
+function initAudioElement() {
+  audioEl.addEventListener('play', () => {
+    updatePlaybackUI();
+    if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+  });
+  audioEl.addEventListener('pause', () => {
+    updatePlaybackUI();
+    if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
+  });
+  audioEl.addEventListener('timeupdate', updatePlaybackUI);
+  audioEl.addEventListener('ended', updatePlaybackUI);
+  audioEl.addEventListener('loadedmetadata', updatePlaybackUI);
+  audioEl.addEventListener('error', () => console.warn('Audio playback error', audioEl.error));
+}
+
+// Lets the phone's lock screen / notification shade show what's playing and
+// offer real play/pause/seek controls — this is what actually makes
+// narration survive a locked screen (speechSynthesis never could).
+function updateMediaSessionMetadata(poi) {
+  if (!('mediaSession' in navigator)) return;
+  const artwork = poi.photos && poi.photos[0]
+    ? [{ src: poi.photos[0], sizes: '512x512', type: 'image/jpeg' }]
+    : [];
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: poiName(poi),
+    artist: t('appTitle'),
+    album: 'Gozo · Comino · Malta',
+    artwork
+  });
+}
+
+function initMediaSessionHandlers() {
+  if (!('mediaSession' in navigator)) return;
+  navigator.mediaSession.setActionHandler('play', () => {
+    const p = audioEl.play();
+    if (p && p.catch) p.catch(() => {});
+  });
+  navigator.mediaSession.setActionHandler('pause', () => audioEl.pause());
+  navigator.mediaSession.setActionHandler('seekbackward', details => skipBy(-(details.seekOffset || 5)));
+  navigator.mediaSession.setActionHandler('seekforward', details => skipBy(details.seekOffset || 5));
+  navigator.mediaSession.setActionHandler('seekto', details => {
+    if (details.seekTime != null) audioEl.currentTime = details.seekTime;
+  });
 }
 
 function setRate(newRate) {
   state.rate = newRate;
   localStorage.setItem(STORAGE_KEYS.rate, String(newRate));
   const display = newRate.toFixed(2).replace(/0$/, '') + '×';
-  const s1 = document.getElementById('rateSlider');
-  const s2 = document.getElementById('rateSliderCard');
-  const v1 = document.getElementById('rateValue');
-  const v2 = document.getElementById('rateValueCard');
-  if (s1) s1.value = String(newRate);
-  if (s2) s2.value = String(newRate);
-  if (v1) v1.textContent = display;
-  if (v2) v2.textContent = display;
-  // Rate can't change mid-utterance — restart from the current spot at the new rate.
-  if (state.playback.playing) {
-    speakFrom(state.playback.fullText, state.playback.lang, state.playback.charIndex);
-  }
+  const slider = document.getElementById('rateSliderCard');
+  const value = document.getElementById('rateValueCard');
+  if (slider) slider.value = String(newRate);
+  if (value) value.textContent = display;
+  // A real <audio> element's playbackRate can change live, mid-playback —
+  // unlike speechSynthesis, no restart needed.
+  audioEl.playbackRate = newRate;
 }
 
 // A short two-tone chime so a proximity trigger is noticeable even with the
@@ -608,134 +533,9 @@ function playChime() {
   }
 }
 
-// ---------- Voice selection (pick the best free voice available on this device) ----------
-
-// Names of Apple/other "novelty" voices we never want to auto-pick (fine if user picks manually).
-const NOVELTY_VOICE_NAMES = [
-  'albert', 'bad news', 'bahh', 'bells', 'boing', 'bubbles', 'cellos', 'good news',
-  'jester', 'organ', 'superstar', 'trinoids', 'whisper', 'wobble', 'zarvox', 'eddy',
-  'flo', 'grandma', 'grandpa', 'reed', 'rocko', 'sandy', 'shelley'
-];
-
-// Names of known high-quality human-like voices across platforms.
-const GOOD_VOICE_NAMES = [
-  'samantha', 'daniel', 'karen', 'moira', 'tessa', 'ava', 'evan', 'nicky', 'aaron',
-  'milena', 'yuri', 'irina', 'pavel', 'google us english', 'google uk english',
-  'natasha', 'aria', 'guy', 'jenny'
-];
-
-function voiceScore(voice) {
-  const name = voice.name.toLowerCase();
-  let score = 0;
-
-  if (NOVELTY_VOICE_NAMES.some(n => name.includes(n))) return -1000; // never auto-pick these
-
-  if (/natural/.test(name)) score += 100;   // Windows 11 "Online (Natural)" neural voices
-  if (/neural/.test(name)) score += 100;
-  if (/enhanced|premium/.test(name)) score += 90; // iOS downloaded high-quality voices
-  if (/online/.test(name)) score += 15;
-  if (voice.localService === false) score += 10; // network voices are usually higher quality
-  if (GOOD_VOICE_NAMES.some(n => name.includes(n))) score += 20;
-  if (/desktop$/.test(name)) score -= 15; // old legacy SAPI voices (e.g. "Microsoft David Desktop")
-
-  return score;
-}
-
-function votesForLang(lang) {
-  const prefix = lang === 'ru' ? 'ru' : 'en';
-  return state.voices
-    .filter(v => v.lang && v.lang.toLowerCase().startsWith(prefix))
-    .sort((a, b) => voiceScore(b) - voiceScore(a));
-}
-
-function bestVoiceFor(lang) {
-  const sorted = votesForLang(lang);
-  return sorted[0] || null;
-}
-
-function pickVoiceFor(lang) {
-  const preferredUri = state.voicePrefs[lang];
-  if (preferredUri) {
-    const found = state.voices.find(v => v.voiceURI === preferredUri);
-    if (found) return found;
-  }
-  return bestVoiceFor(lang);
-}
-
-function loadVoices() {
-  return new Promise(resolve => {
-    if (!('speechSynthesis' in window)) return resolve([]);
-    const existing = window.speechSynthesis.getVoices();
-    if (existing.length) {
-      resolve(existing);
-      return;
-    }
-    let resolved = false;
-    window.speechSynthesis.onvoiceschanged = () => {
-      if (resolved) return;
-      resolved = true;
-      resolve(window.speechSynthesis.getVoices());
-    };
-    // Some browsers/webviews never fire voiceschanged reliably — fall back after a short wait.
-    setTimeout(() => {
-      if (resolved) return;
-      resolved = true;
-      resolve(window.speechSynthesis.getVoices());
-    }, 1500);
-  });
-}
-
-function populateVoicePickers() {
-  ['ru', 'en'].forEach(lang => {
-    const select = document.getElementById(lang === 'ru' ? 'voiceSelectRu' : 'voiceSelectEn');
-    if (!select) return;
-    const options = votesForLang(lang);
-    if (!options.length) {
-      select.innerHTML = `<option value="">—</option>`;
-      select.disabled = true;
-      return;
-    }
-    select.disabled = false;
-    select.innerHTML = options
-      .map(v => `<option value="${v.voiceURI}">${v.name}${v.localService ? '' : ' 🌐'}</option>`)
-      .join('');
-    const preferred = state.voicePrefs[lang];
-    const hasPreferred = preferred && options.some(v => v.voiceURI === preferred);
-    select.value = hasPreferred ? preferred : options[0].voiceURI;
-    if (!hasPreferred) {
-      state.voicePrefs[lang] = options[0].voiceURI;
-      localStorage.setItem(lang === 'ru' ? STORAGE_KEYS.voiceRu : STORAGE_KEYS.voiceEn, options[0].voiceURI);
-    }
-  });
-}
-
-function initVoicePickers() {
-  ['ru', 'en'].forEach(lang => {
-    const select = document.getElementById(lang === 'ru' ? 'voiceSelectRu' : 'voiceSelectEn');
-    const testBtn = document.getElementById(lang === 'ru' ? 'testVoiceRuBtn' : 'testVoiceEnBtn');
-    if (select) {
-      select.addEventListener('change', () => {
-        state.voicePrefs[lang] = select.value;
-        localStorage.setItem(lang === 'ru' ? STORAGE_KEYS.voiceRu : STORAGE_KEYS.voiceEn, select.value);
-      });
-    }
-    if (testBtn) {
-      testBtn.addEventListener('click', () => {
-        state.audioUnlocked = true;
-        const sample = lang === 'ru'
-          ? 'Привет! Это пример голоса для гида.'
-          : 'Hello! This is a sample of the guide voice.';
-        speak(sample, lang);
-      });
-    }
-  });
-
-  setRate(state.rate); // sync both sliders + labels to the stored value
-
-  const rateSlider = document.getElementById('rateSlider');
-  if (rateSlider) {
-    rateSlider.addEventListener('input', () => setRate(Number(rateSlider.value)));
-  }
+// ---------- Playback rate control ----------
+function initRateControl() {
+  setRate(state.rate); // sync the slider + label to the stored value
   const rateSliderCard = document.getElementById('rateSliderCard');
   if (rateSliderCard) {
     rateSliderCard.addEventListener('input', () => setRate(Number(rateSliderCard.value)));
@@ -752,9 +552,11 @@ function initPoiCardControls() {
   document.getElementById('skipFwdBtn').addEventListener('click', () => skipBy(5));
 
   const slider = document.getElementById('progressSlider');
-  slider.addEventListener('change', () => {
+  slider.addEventListener('pointerdown', () => { isScrubbing = true; });
+  slider.addEventListener('input', () => {
     seekToFraction(Number(slider.value) / 1000);
   });
+  slider.addEventListener('pointerup', () => { isScrubbing = false; });
 
   initLightbox();
   initCarouselSwipe();
@@ -1013,21 +815,11 @@ async function checkForUpdates() {
   initStartScreen();
   initTabs();
   initPoiCardControls();
-  initVoicePickers();
+  initRateControl();
+  initAudioElement();
+  initMediaSessionHandlers();
   applyStaticI18n();
   registerServiceWorker();
-
-  // Voice list can load asynchronously (especially in Chrome) — wait for it,
-  // then fill in the RU/EN voice pickers and re-populate whenever the OS
-  // reports new/changed voices (e.g. after downloading a language pack).
-  if ('speechSynthesis' in window) {
-    state.voices = await loadVoices();
-    populateVoicePickers();
-    window.speechSynthesis.onvoiceschanged = () => {
-      state.voices = window.speechSynthesis.getVoices();
-      populateVoicePickers();
-    };
-  }
 })();
 
 function showFatalError() {

@@ -79,43 +79,6 @@ html, body {
   font-weight: 600;
 }
 
-.voice-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.voice-tag {
-  flex-shrink: 0;
-  width: 28px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #777;
-}
-
-.voice-row select {
-  flex: 1;
-  min-width: 0;
-  padding: 8px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 0.85rem;
-  background: #fff;
-}
-
-.test-voice-btn {
-  flex-shrink: 0;
-  border: none;
-  background: var(--sea);
-  color: #fff;
-  border-radius: 10px;
-  width: 36px;
-  height: 36px;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
 .rate-row {
   display: flex;
   align-items: center;

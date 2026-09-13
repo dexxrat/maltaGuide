@@ -1,6 +1,6 @@
 # MaltaGuide
 
-Offline-first PWA audio guide for a Gozo/Comino/Malta trip (12–16 Sep 2026). Vanilla HTML/JS/CSS, Leaflet + OSM tiles, browser Web Speech API for narration, geolocation-triggered POI cards. No backend, no build step, no API keys. Deployed via GitHub Pages at https://dexxrat.github.io/maltaGuide/ (push to `main` auto-publishes in ~1–2 min).
+Offline-first PWA audio guide for a Gozo/Comino/Malta trip (12–16 Sep 2026). Vanilla HTML/JS/CSS, Leaflet + OSM tiles, pre-rendered `<audio>` narration (see "Narration audio" below) with geolocation-triggered POI cards. No backend, no build step, no API keys. Deployed via GitHub Pages at https://dexxrat.github.io/maltaGuide/ (push to `main` auto-publishes in ~1–2 min).
 
 ## Adding new POIs
 
@@ -35,7 +35,8 @@ POST as `data=<query>` to `https://overpass-api.de/api/interpreter`. Widen the r
 - Length: 150–250 words for a routine/secondary stop, 250–350 words for a "headline" stop (the main reason someone is walking to this cluster at all) — matches izi.TRAVEL's own published guidance.
 - Structure: hook tied to what the listener sees right now → concrete fact with real specifics (dates, names, numbers) → one surprising/human detail → soft close, ideally pointing toward whatever's physically next nearby.
 - Conversational, spoken-aloud tone, addressing the listener directly (ты/you). No bullet lists, no dry fact-dumps, no subheadings inside the text — it's one continuous thing to be read aloud.
-- Don't worry about parentheses or quote marks in the text — `sanitizeForSpeech()` in app.js already strips those from what actually gets spoken; write the display text naturally.
+- Don't worry about parentheses or quote marks in the text — the sanitize step in `scratchpad/generate_audio.py` strips those from what actually gets narrated (same character set `sanitizeForSpeech()` used to strip client-side, before the switch to pre-rendered audio); write the display text naturally.
+- **After editing or adding text in `i18n.json`, regenerate that POI's audio** — see "Narration audio" below. The display text and the spoken audio are two separate artifacts now; editing one does not update the other automatically.
 
 **5. Photos:**
 - Wikimedia Commons only, free license (CC0 / CC BY / CC BY-SA / PD) — check the `LicenseShortName` in `extmetadata`, don't guess from the filename.
@@ -48,7 +49,8 @@ POST as `data=<query>` to `https://overpass-api.de/api/interpreter`. Widen the r
 - `data/pois.json` — new entry (id, name, category, icon, lat, lng, radius?, coordsVerified, coordsNote, photos[]).
 - `data/i18n.json` — `ru.pois.<id>.text` and `en.pois.<id>.text`.
 - `data/photo_credits.json` + regenerate `CREDITS.md`.
-- `sw.js` — **nothing to do here**: it reads `data/pois.json` at install time and precaches whatever's in every `photos[]` array automatically. Just bump `CACHE_NAME` (e.g. v11 → v12) so already-cached devices actually pick up the change.
+- Run `scratchpad/generate_audio.py` (recreate from the "Narration audio" section below if it's gone) to render `assets/audio/<id>_ru.mp3` and `assets/audio/<id>_en.mp3` for the new POI — it skips files that already exist, so it's safe to re-run for the whole project any time.
+- `sw.js` — **nothing to do here**: it reads `data/pois.json` at install time and precaches whatever's in every `photos[]` array and every POI's two audio files automatically. Just bump `CACHE_NAME` (e.g. v16 → v17) so already-cached devices actually pick up the change.
 - Run the verify script — must be 0 failures before committing.
 - Commit, push to `main`, then poll `curl -s https://dexxrat.github.io/maltaGuide/sw.js | grep CACHE_NAME` until the new version string shows up before telling the user it's live.
 
@@ -58,12 +60,21 @@ The GPS simulator panel only appears when the URL has `?dev=1` (e.g. `http://loc
 
 For local testing before pushing: any static file server works (`python -m http.server`, `npx serve .`) — but iOS Safari requires a secure context (HTTPS or `localhost`) for Geolocation and Service Worker, so testing over a LAN IP from a phone needs an HTTPS tunnel (e.g. `npx localtunnel --port <port>`), not a bare `http://192.168.x.x`.
 
+## Narration audio (pre-rendered, not live TTS)
+
+Narration used to be spoken live by the browser's Web Speech API (`speechSynthesis`), which had two real ceilings: no true seekable timeline (only word-granular position from `onboundary` events) and — the bigger one — it cannot speak at all with the screen locked or the app backgrounded on either iOS or Android, a browser policy, not a bug. Both are fixed by pre-rendering real audio files instead:
+
+- **Generation**: `scratchpad/generate_audio.py` (recreate from this description if it's gone) reads `data/pois.json` + `data/i18n.json`, applies the same sanitize step `sanitizeForSpeech()` used to do client-side (strip `(parentheticals)`, `[brackets]`, and quote marks), and calls `edge-tts` (free, unofficial, no API key — taps Microsoft Edge's "Read Aloud" neural TTS backend via `pip install edge-tts`) to render `assets/audio/<id>_ru.mp3` and `assets/audio/<id>_en.mp3` for every POI. It's idempotent (skips files that already exist), so re-run it any time after adding/editing text — nothing needs deleting first, just remove the specific `<id>_<lang>.mp3` file(s) you want regenerated.
+- **Voices**: one fixed voice per language, chosen by listening to samples (not the old per-visitor picker) — `ru-RU-SvetlanaNeural` for Russian, `en-US-AriaNeural` for English. Both hardcoded in the `VOICES` dict at the top of `generate_audio.py`. Swapping either is a one-line change + delete the affected `assets/audio/*_<lang>.mp3` files + re-run.
+- **Playback engine** (`app.js`): one shared `const audioEl = new Audio()`. `prepareNarration(poi, lang)` sets `audioEl.src` to the right file and resets to paused/0:00 — opening a card, or walking up to one, never auto-plays. Play/pause/restart/±5s-skip/seek-slider are now thin wrappers over `audioEl.play()/.pause()/.currentTime` — real, accurate, no estimation. Speed changes (`setRate`) set `audioEl.playbackRate` live, no restart needed (unlike `speechSynthesis`, which had to restart the utterance to change rate).
+- **Background/lock-screen playback**: `initMediaSessionHandlers()` wires `navigator.mediaSession` play/pause/seekbackward/seekforward/seekto action handlers, and `updateMediaSessionMetadata()` sets title/artwork per POI — this is what actually makes narration keep playing with the screen locked, and shows proper lock-screen transport controls. Geolocation-triggered auto-opening of the *next* card still requires the app in the foreground (see below) — this only fixes continuing to listen to the *current* one after locking the phone.
+- **Size**: ~18MB total for 34 POIs × 2 languages (mp3, one fixed voice each) — precached by `sw.js` (`getAudioUrls()`) alongside photos and map tiles, same "derive from pois.json, nothing hand-maintained" pattern.
+- **Unlocking `<audio>` on iOS**: `unlockAudio()` plays a silent embedded WAV through the *same* shared `audioEl` synchronously inside the start button's click handler — iOS Safari only requires the *first* play of a given media element to originate from a user gesture; every later programmatic `.play()` on that same element (even from a Media Session handler with the screen locked) then works.
+
 ## Known limitations (platform, not budget)
 
-- No background operation: iOS Safari/PWA cannot run geolocation callbacks while the screen is off or the app is backgrounded — this is an iOS platform restriction, not something fixable by more engineering. The phone must stay unlocked with the app in the foreground while walking.
+- No background operation for *new* geo-triggers: iOS Safari/PWA cannot run geolocation callbacks while the screen is off or the app is backgrounded — this is an iOS platform restriction, not something fixable by more engineering. The phone must stay unlocked with the app in the foreground for a POI card to auto-open on arrival. (Audio already playing when the screen locks is a separate matter — see "Narration audio" above — that part does now keep working.)
 - No Vibration API on iOS Safari at all — the proximity chime (Web Audio API beep) is the cross-platform substitute, not a fallback for a "better" haptic option.
-- Seeking within narration is word-granular, not time-granular — Web Speech API has no decoded audio buffer to seek within, only a live synthesis stream. `speakFrom()` in app.js re-synthesizes from the nearest word boundary; that's the ceiling of what's possible here, not a shortcut. The ±5s skip buttons are built on the same limitation: there's no real playback clock, so app.js measures wall-clock-time-vs-characters-spoken live (via `onboundary`) to estimate characters-per-second, and converts "5 seconds" through that estimate — it's genuinely approximate (could be 4s or 6s depending on word length nearby), not a rounding shortcut we could tighten.
-- Narration truly cannot continue with the screen locked or the app backgrounded on either iOS or Android — this is enforced by the browser, not just iOS. The one real path around it (not currently built) is pre-rendering actual audio files offline (e.g. via `edge-tts`, free, no key) and playing them through an `<audio>` element with the Media Session API, which real background/lock-screen audio policies do allow — at the cost of losing the per-visitor voice picker (one fixed baked-in voice instead) and a much larger download (real audio per POI per language vs. today's text).
 
 ## Offline map tiles
 
