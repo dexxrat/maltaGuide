@@ -1,0 +1,146 @@
+{
+  "ru": {
+    "ui": {
+      "appTitle": "Аудиогид: Гозо, Комино и Мальта",
+      "appSubtitle": "12–16 сентября 2026",
+      "chooseLanguage": "Выберите язык",
+      "startGuide": "Начать гид",
+      "startHint": "Нажмите, чтобы включить озвучку — браузер требует явного действия",
+      "tabMap": "Карта",
+      "tabList": "Список мест",
+      "devPanelTitle": "Симулятор GPS (для тестирования)",
+      "simulateLabel": "Режим симуляции",
+      "realGpsLabel": "Реальный GPS",
+      "selectPoiLabel": "Выберите точку",
+      "teleportBtn": "Телепортироваться",
+      "replayBtn": "🔊 Прослушать ещё раз",
+      "nextBtn": "Понятно, дальше",
+      "manualPlayBtn": "▶ Прослушать",
+      "visitedLabel": "Посещено",
+      "notVisitedLabel": "Не посещено",
+      "photoPlaceholder": "Фото ещё не добавлено — см. README",
+      "statusIdle": "Ищу ближайшие точки маршрута…",
+      "statusNear": "Рядом:",
+      "statusRealGpsOff": "GPS не активен (включите режим или разрешите геолокацию)",
+      "radiusLabel": "Радиус срабатывания (м)",
+      "resetProgressBtn": "Сбросить прогресс",
+      "distanceUnit": "м"
+    },
+    "pois": {
+      "ramla_bay": {
+        "text": "Перед вами Рамла — самый большой и, пожалуй, самый красивый пляж Гозо. Обратите внимание на песок: его золотисто-красный оттенок — визитная карточка острова. Вода здесь тёплая и мелкая у берега, так что смело заходите купаться, а вдоль скал по краям бухты стоит понырять с маской. Если после купания останутся силы, поднимитесь к пещере Тал-Микста над пляжем — оттуда открывается открыточный вид на всю бухту."
+      },
+      "san_blas": {
+        "text": "San Blas — младшая, дикая сестра Рамлы: тот же рыжий песок, но куда меньше людей. Причина проста — спуск к пляжу очень крутой, и не все решаются его одолеть, особенно в жару. Зато вода здесь удивительно чистая, а снорклинг один из лучших на острове. Рассчитайте силы на обратный подъём — он тяжелее, чем кажется."
+      },
+      "hondoq": {
+        "text": "Ħondoq ir-Rummien — ближайший к вашему отелю пляж, и не зря один из любимых у местных. Здесь смешались песок, мелкая галька и скальные платформы, а прямо перед вами — остров Комино. Вода спокойная и прозрачная настолько, что это одно из лучших мест на Гозо для снорклинга: плывите вдоль скалистых краёв бухты к маленькой пещере."
+      },
+      "wied_ilghasri": {
+        "text": "Вы стоите у входа в Wied il-Għasri — узкое ущелье, будто прорезанное природой специально для того, чтобы вывести вас к морю. Спуск по ступеням крутой, но того стоит: внизу крошечный пляж и один из самых живописных снорклинг-спотов острова с подводными пещерами и стайками рыб."
+      },
+      "dwejra": {
+        "text": "Dwejra — визитная карточка западного побережья Гозо. Когда-то здесь стояло знаменитое Лазурное окно, обрушившееся в 2017 году, но природа и без него впечатляет: Fungus Rock, Голубая дыра — всемирно известный дайв-сайт, и Внутреннее море, скрытая лагуна, соединённая с морем тоннелем в скале. Голубая дыра хороша для снорклинга, но течения здесь для уверенных пловцов."
+      },
+      "mgarr_ixxini": {
+        "text": "Mġarr ix-Xini — узкая бухта-фьорд между высокими скалами, настолько кинематографичная, что здесь снимали сцену с Анджелиной Джоли и Брэдом Питтом. Вода спокойная и защищённая от волн — идеально для снорклинга и исследования пещер. На берегу всего один рыбный ресторан, так что атмосфера тихая, почти нетронутая."
+      },
+      "xlendi": {
+        "text": "Xlendi — курортная бухта на юго-западе Гозо, зажатая между скал. Вода спокойная и чистая, отлично подходит для купания, снорклинга и каяков, а набережная с ресторанами так и манит задержаться до заката."
+      },
+      "marsalforn": {
+        "text": "Marsalforn — главный северный курорт Гозо: рестораны, набережная и спокойная вечерняя жизнь. По соседству — соляные пруды и мелкий «детский» риф у Xwejni, где даже неуверенные пловцы найдут что посмотреть под водой."
+      },
+      "ggantija": {
+        "text": "Перед вами Ġgantija — один из старейших отдельно стоящих храмов в мире, старше египетских пирамид почти на тысячу лет. Название переводится как «храм великанов»: по легенде, местные жители верили, что построить такое могли только гиганты. Билет также открывает вход в соседнюю мельницу Ta' Kola."
+      },
+      "cittadella": {
+        "text": "Cittadella возвышается над Викторией, столицей Гозо, уже несколько веков защищая остров. Прогулка по крепостным стенам бесплатна и дарит один из лучших панорамных видов на остров — особенно хороша на закате. Внутри стен работает несколько небольших музеев по единому билету, если захочется задержаться подольше."
+      },
+      "qala_belvedere": {
+        "text": "Qala Belvedere — смотровая площадка в паре шагов от вашего отеля. Отсюда как на ладони виден остров Комино, а в ясную погоду — и берега Мальты. Одно из лучших мест на маршруте, чтобы встретить закат."
+      },
+      "comino_lagoons": {
+        "text": "Комино знаменит Голубой лагуной — той самой бирюзовой водой, что вы видели на фотографиях. Но опытные путешественники предпочитают соседнюю Кристальную лагуну: она тише и ничуть не хуже для снорклинга. Неподалёку — пещеры контрабандистов Santa Marija Caves, ещё одна причина задержаться здесь подольше."
+      },
+      "st_peters_pool": {
+        "text": "St Peter's Pool — природный бассейн, вырезанный морем в скалах мыса Делимара. Плоские камни вокруг идеальны для того, чтобы позагорать, а смельчаки прыгают отсюда в воду со скал. Вода чистая, отлично видно дно — берите маску."
+      },
+      "marsaxlokk": {
+        "text": "Marsaxlokk — рыбацкая деревня, где до сих пор покачиваются на воде разноцветные традиционные лодки luzzu с нарисованным на носу глазом — древним оберегом от злых духов. По воскресеньям утром здесь разворачивается большой рыбный рынок: приезжайте пораньше, лучшая рыба уходит быстро."
+      }
+    }
+  },
+  "en": {
+    "ui": {
+      "appTitle": "Audio Guide: Gozo, Comino & Malta",
+      "appSubtitle": "12–16 September 2026",
+      "chooseLanguage": "Choose your language",
+      "startGuide": "Start the guide",
+      "startHint": "Tap to enable narration — browsers require an explicit action first",
+      "tabMap": "Map",
+      "tabList": "Place list",
+      "devPanelTitle": "GPS Simulator (for testing)",
+      "simulateLabel": "Simulation mode",
+      "realGpsLabel": "Real GPS",
+      "selectPoiLabel": "Select a place",
+      "teleportBtn": "Teleport there",
+      "replayBtn": "🔊 Listen again",
+      "nextBtn": "Got it, next",
+      "manualPlayBtn": "▶ Play",
+      "visitedLabel": "Visited",
+      "notVisitedLabel": "Not visited",
+      "photoPlaceholder": "No photo added yet — see README",
+      "statusIdle": "Looking for nearby stops…",
+      "statusNear": "Nearby:",
+      "statusRealGpsOff": "GPS is off (enable simulation or allow location access)",
+      "radiusLabel": "Trigger radius (m)",
+      "resetProgressBtn": "Reset progress",
+      "distanceUnit": "m"
+    },
+    "pois": {
+      "ramla_bay": {
+        "text": "Welcome to Ramla Bay — Gozo's largest and arguably most beautiful beach. Notice the sand: that reddish-gold color is the island's trademark. The water is warm and shallow near the shore, perfect for swimming, and the rocks on either side of the bay offer good snorkeling. If you've got energy left after a swim, climb up to Tal-Mixta cave above the beach for a postcard view of the whole bay."
+      },
+      "san_blas": {
+        "text": "San Blas is Ramla's wilder little sibling — the same fiery red sand, but far fewer people. The reason is simple: the path down is steep, and not everyone attempts it, especially in the heat. But the water here is remarkably clear and the snorkeling is among the best on the island. Pace yourself for the climb back up — it's tougher than it looks."
+      },
+      "hondoq": {
+        "text": "Ħondoq ir-Rummien is the beach closest to your hotel, and it's a local favorite for good reason. Sand, fine pebbles and rock platforms meet here, with Comino sitting right across the water. The sea is calm and clear enough that this is one of Gozo's best snorkeling spots — swim along the rocky edges of the bay toward the small cave."
+      },
+      "wied_ilghasri": {
+        "text": "You're standing at the mouth of Wied il-Għasri — a narrow gorge that seems carved by nature just to lead you to the sea. The steps down are steep, but it's worth it: a tiny beach waits below, along with one of the island's most scenic snorkeling spots, complete with underwater caves and schools of fish."
+      },
+      "dwejra": {
+        "text": "Dwejra is the signature stop on Gozo's west coast. The famous Azure Window once stood here before collapsing in 2017, but nature still delivers: Fungus Rock, the world-renowned Blue Hole dive site, and the Inland Sea — a hidden lagoon connected to the open water by a tunnel through the rock. The Blue Hole is great for snorkeling, though the currents call for confident swimmers."
+      },
+      "mgarr_ixxini": {
+        "text": "Mġarr ix-Xini is a narrow fjord-like inlet between high cliffs — so cinematic it was used as a filming location for Angelina Jolie and Brad Pitt's 'By the Sea'. The water is calm and sheltered, ideal for snorkeling and cave exploring. There's just one fish restaurant on the shore, so the mood stays quiet and almost untouched."
+      },
+      "xlendi": {
+        "text": "Xlendi is a resort cove tucked between cliffs on Gozo's southwest coast. The water is calm and clear, great for swimming, snorkeling and kayaking, and the promenade lined with restaurants makes it tempting to linger until sunset."
+      },
+      "marsalforn": {
+        "text": "Marsalforn is Gozo's main northern resort town — restaurants, a seaside promenade, and a relaxed evening buzz. Nearby are the salt pans and a shallow 'nursery reef' at Xwejni, where even hesitant swimmers will find plenty to see underwater."
+      },
+      "ggantija": {
+        "text": "You're looking at Ġgantija, one of the oldest free-standing structures on Earth — older than the Egyptian pyramids by nearly a thousand years. The name means 'giant's tower': legend has it locals believed only giants could have built something this massive. Your ticket also gets you into the neighboring Ta' Kola windmill."
+      },
+      "cittadella": {
+        "text": "The Cittadella has watched over Victoria, Gozo's capital, for centuries. Walking the fortress walls is free and rewards you with one of the best panoramic views on the island — especially stunning at sunset. Inside the walls, a handful of small museums share a single ticket if you'd like to stay a little longer."
+      },
+      "qala_belvedere": {
+        "text": "The Qala Belvedere lookout is just a short walk from your hotel. From here Comino sits right in front of you, and on a clear day you can even make out the coast of Malta. It's one of the best spots on this trip to watch the sunset."
+      },
+      "comino_lagoons": {
+        "text": "Comino is famous for the Blue Lagoon — that turquoise water you've seen in every photo. But seasoned visitors often prefer the neighboring Crystal Lagoon: quieter, and just as good for snorkeling. Nearby, the smugglers' Santa Marija Caves give you one more reason to stick around."
+      },
+      "st_peters_pool": {
+        "text": "St Peter's Pool is a natural swimming pool carved by the sea into the cliffs of Delimara Point. Flat rocks around it are perfect for sunbathing, while the more adventurous jump straight into the water from above. The sea here is clear enough to see the bottom — bring a mask."
+      },
+      "marsaxlokk": {
+        "text": "Marsaxlokk is a fishing village where colorful traditional luzzu boats still bob in the harbor, each with an eye painted on the bow — an ancient charm against evil spirits. On Sunday mornings the waterfront turns into a lively fish market: arrive early, the best catch goes fast."
+      }
+    }
+  }
+}

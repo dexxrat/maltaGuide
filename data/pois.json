@@ -1,0 +1,191 @@
+{
+  "_meta": {
+    "note": "Coordinates were geocoded on 2026-09-13 via OpenStreetMap Nominatim (free, no key) against real map features (beach/attraction nodes where possible). coordsVerified:true means a specific point feature was matched (e.g. a mapped beach or landmark) — still worth a quick glance on Google Maps before the trip. coordsVerified:false means the match was a broader area (village/admin centroid or an averaged multi-point site) and should be tightened with a real Google Maps long-press before relying on it for geo-triggers.",
+    "defaultRadiusMeters": 150,
+    "coordsSource": "OpenStreetMap / Nominatim, geocoded 2026-09-13"
+  },
+  "pois": [
+    {
+      "id": "ramla_bay",
+      "name": "Ramla Bay (Ramla il-Ħamra)",
+      "category": "beach",
+      "icon": "🏖️",
+      "lat": 36.0623,
+      "lng": 14.2837,
+      "coordsVerified": true,
+      "coordsNote": "Center of the two mapped swimming-area halves of the beach.",
+      "photos": [
+        "assets/photos/ramla_bay.jpg"
+      ]
+    },
+    {
+      "id": "san_blas",
+      "name": "San Blas Bay",
+      "category": "beach",
+      "icon": "🏖️",
+      "lat": 36.057,
+      "lng": 14.3004,
+      "coordsVerified": true,
+      "coordsNote": "Mapped beach node near Nadur.",
+      "photos": [
+        "assets/photos/san_blas.jpg"
+      ]
+    },
+    {
+      "id": "hondoq",
+      "name": "Ħondoq ir-Rummien",
+      "category": "beach",
+      "icon": "🤿",
+      "lat": 36.0279,
+      "lng": 14.3221,
+      "coordsVerified": true,
+      "coordsNote": "Mapped beach node — corrects an earlier placeholder that was ~2 km off.",
+      "photos": [
+        "assets/photos/hondoq.jpg"
+      ]
+    },
+    {
+      "id": "wied_ilghasri",
+      "name": "Wied il-Għasri",
+      "category": "nature",
+      "icon": "🏞️",
+      "lat": 36.0787,
+      "lng": 14.2282,
+      "coordsVerified": true,
+      "coordsNote": "Mapped beach node at the mouth of the gorge.",
+      "photos": [
+        "assets/photos/wied_ilghasri.jpg"
+      ]
+    },
+    {
+      "id": "dwejra",
+      "name": "Dwejra (Inland Sea & Blue Hole)",
+      "category": "nature",
+      "icon": "🌊",
+      "lat": 36.0529,
+      "lng": 14.1892,
+      "coordsVerified": false,
+      "coordsNote": "Averaged between the Azure Window site and the Dwejra parking area — the whole heritage park spans a few hundred meters (Inland Sea, Blue Hole, Fungus Rock are all separate spots). Worth pinning the exact parking/entry point on Google Maps.",
+      "photos": [
+        "assets/photos/dwejra.jpg"
+      ]
+    },
+    {
+      "id": "mgarr_ixxini",
+      "name": "Mġarr ix-Xini",
+      "category": "nature",
+      "icon": "🛶",
+      "lat": 36.0203,
+      "lng": 14.2712,
+      "coordsVerified": true,
+      "coordsNote": "Mapped beach node at the inlet.",
+      "photos": [
+        "assets/photos/mgarr_ixxini.jpg"
+      ]
+    },
+    {
+      "id": "xlendi",
+      "name": "Xlendi Bay",
+      "category": "town",
+      "icon": "🏘️",
+      "lat": 36.0303,
+      "lng": 14.2172,
+      "coordsVerified": true,
+      "coordsNote": "Mapped beach node — corrects an earlier placeholder that was ~1.6 km off.",
+      "photos": [
+        "assets/photos/xlendi.jpg"
+      ]
+    },
+    {
+      "id": "marsalforn",
+      "name": "Marsalforn",
+      "category": "town",
+      "icon": "🌆",
+      "lat": 36.0709,
+      "lng": 14.2598,
+      "coordsVerified": false,
+      "coordsNote": "Village centroid, not the specific promenade/beach — fine for a compact village but worth nudging toward the seafront if you want the trigger closer to the water.",
+      "photos": [
+        "assets/photos/marsalforn.jpg"
+      ]
+    },
+    {
+      "id": "ggantija",
+      "name": "Ġgantija Temples",
+      "category": "historic",
+      "icon": "🏛️",
+      "lat": 36.0471,
+      "lng": 14.2692,
+      "coordsVerified": true,
+      "coordsNote": "Mapped temple site/attraction node.",
+      "photos": [
+        "assets/photos/ggantija.jpg"
+      ]
+    },
+    {
+      "id": "cittadella",
+      "name": "Cittadella, Victoria",
+      "category": "historic",
+      "icon": "🏰",
+      "lat": 36.0458,
+      "lng": 14.239,
+      "coordsVerified": true,
+      "coordsNote": "Mapped Cittadella node in Rabat/Victoria.",
+      "photos": [
+        "assets/photos/cittadella.jpg"
+      ]
+    },
+    {
+      "id": "qala_belvedere",
+      "name": "Qala Belvedere",
+      "category": "viewpoint",
+      "icon": "🌅",
+      "lat": 36.031,
+      "lng": 14.3094,
+      "coordsVerified": true,
+      "coordsNote": "Matched 'Ġnien il-Belveder' (Belvedere Garden) directly — corrects an earlier placeholder that was ~1 km off.",
+      "photos": [
+        "assets/photos/qala_belvedere.jpg"
+      ]
+    },
+    {
+      "id": "comino_lagoons",
+      "name": "Comino — Blue Lagoon & Crystal Lagoon",
+      "category": "lagoon",
+      "icon": "🏝️",
+      "lat": 36.014,
+      "lng": 14.3234,
+      "coordsVerified": true,
+      "coordsNote": "Mapped tourism attraction point between Comino and Cominotto (the Blue Lagoon channel).",
+      "photos": [
+        "assets/photos/comino_lagoons.jpg"
+      ]
+    },
+    {
+      "id": "st_peters_pool",
+      "name": "St Peter's Pool, Malta",
+      "category": "beach",
+      "icon": "🏊",
+      "lat": 35.833,
+      "lng": 14.5622,
+      "coordsVerified": true,
+      "coordsNote": "Matched 'Il-Kalanka tal-Qali', the local name for the St Peter's Pool bay — corrects an earlier placeholder that was ~600 m off.",
+      "photos": [
+        "assets/photos/st_peters_pool.jpg"
+      ]
+    },
+    {
+      "id": "marsaxlokk",
+      "name": "Marsaxlokk, Malta",
+      "category": "town",
+      "icon": "🎣",
+      "lat": 35.8418,
+      "lng": 14.5448,
+      "coordsVerified": false,
+      "coordsNote": "Administrative village centroid, not specifically the harbour front — fine given the village is compact and walkable, but nudge toward the water if you want the trigger right at the luzzu boats.",
+      "photos": [
+        "assets/photos/marsaxlokk.jpg"
+      ]
+    }
+  ]
+}

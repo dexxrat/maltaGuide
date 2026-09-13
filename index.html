@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Аудиогид: Гозо, Комино и Мальта</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta name="theme-color" content="#0f4c5c">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="startScreen" class="screen">
+  <div class="start-card">
+    <h1 id="appTitle">Аудиогид: Гозо, Комино и Мальта</h1>
+    <p id="appSubtitle" class="muted">12–16 сентября 2026</p>
+
+    <p class="label" id="chooseLanguageLabel">Выберите язык</p>
+    <div class="lang-row">
+      <button class="lang-btn active" data-lang="ru">Русский</button>
+      <button class="lang-btn" data-lang="en">English</button>
+    </div>
+
+    <p class="label" id="voiceSettingsLabel">Голос озвучки (можно проверить и выбрать лучший)</p>
+    <div class="voice-row">
+      <span class="voice-tag">RU</span>
+      <select id="voiceSelectRu"></select>
+      <button id="testVoiceRuBtn" class="test-voice-btn" aria-label="test ru voice">▶</button>
+    </div>
+    <div class="voice-row">
+      <span class="voice-tag">EN</span>
+      <select id="voiceSelectEn"></select>
+      <button id="testVoiceEnBtn" class="test-voice-btn" aria-label="test en voice">▶</button>
+    </div>
+
+    <button id="startBtn" class="primary-btn">Начать гид</button>
+    <p class="hint" id="startHint">Нажмите, чтобы включить озвучку — браузер требует явного действия</p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" class="screen hidden">
+  <header class="topbar">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="map" id="tabMapBtn">Карта</button>
+      <button class="tab-btn" data-tab="list" id="tabListBtn">Список мест</button>
+    </div>
+    <div class="status-line" id="statusLine">Ищу ближайшие точки маршрута…</div>
+  </header>
+
+  <main>
+    <section id="mapView" class="view">
+      <div id="map"></div>
+    </section>
+
+    <section id="listView" class="view hidden">
+      <ul id="poiList" class="poi-list"></ul>
+    </section>
+  </main>
+
+  <!-- POI CARD MODAL -->
+  <div id="poiCard" class="poi-card hidden">
+    <div class="poi-card-inner">
+      <button id="closeCardBtn" class="close-btn" aria-label="close">✕</button>
+      <div id="poiPhoto" class="poi-photo">🖼️</div>
+      <h2 id="poiName"></h2>
+      <p id="poiText" class="poi-text"></p>
+      <div class="poi-actions">
+        <button id="replayBtn" class="secondary-btn">🔊 Прослушать ещё раз</button>
+        <button id="nextBtn" class="primary-btn">Понятно, дальше</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEV / GPS SIMULATOR PANEL -->
+  <div id="devPanel" class="dev-panel collapsed">
+    <button id="devPanelToggle" class="dev-toggle">🛠 Симулятор GPS</button>
+    <div class="dev-body">
+      <label class="dev-row">
+        <input type="checkbox" id="simModeCheckbox" checked>
+        <span id="simulateLabel">Режим симуляции (вместо реального GPS)</span>
+      </label>
+      <div class="dev-row">
+        <select id="simPoiSelect"></select>
+        <button id="teleportBtn">Телепортироваться</button>
+      </div>
+      <div class="dev-row">
+        <label for="radiusInput" id="radiusLabel">Радиус срабатывания (м)</label>
+        <input type="number" id="radiusInput" min="20" max="1000" step="10" value="150">
+      </div>
+      <div class="dev-row">
+        <button id="resetProgressBtn">Сбросить прогресс</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
