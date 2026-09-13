@@ -449,7 +449,13 @@ main {
   color: #fff;
 }
 
-.poi-photo img { cursor: zoom-in; }
+.poi-photo img {
+  cursor: zoom-in;
+  touch-action: pan-y;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
 
 .photo-nav {
   position: absolute;
@@ -512,10 +518,15 @@ main {
 }
 
 .playback-controls {
+  margin-bottom: 10px;
+}
+
+.transport-row {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .transport-btn {
@@ -530,6 +541,11 @@ main {
   cursor: pointer;
 }
 
+.skip-btn {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
 .play-pause-btn {
   width: 46px;
   height: 46px;
@@ -537,8 +553,7 @@ main {
 }
 
 .progress-slider {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
 }
 
 .rate-row-card {

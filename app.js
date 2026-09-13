@@ -39,7 +39,7 @@ let state = {
   // a decoded audio file), so "seeking" means: remember roughly how far into
   // the sanitized text we've gotten (via onboundary word events) and, to
   // seek/resume/change rate, cancel and re-speak from that character offset.
-  playback: { fullText: '', lang: 'ru', charIndex: 0, playing: false }
+  playback: { fullText: '', lang: 'ru', charIndex: 0, playing: false, charsPerSecond: null }
 };
 
 // ---------- Persistence helpers ----------
@@ -339,7 +339,7 @@ function renderPhotoCarousel(poi) {
     : '';
 
   photoEl.innerHTML = `
-    <img src="${photos[activePhotoIndex]}" alt="${poiName(poi)}" onerror="this.parentElement.innerHTML='${poi.icon}'">
+    <img src="${photos[activePhotoIndex]}" alt="${poiName(poi)}" draggable="false" onerror="this.parentElement.innerHTML='${poi.icon}'">
     ${arrows}
     ${dots}
   `;
@@ -409,6 +409,7 @@ function speak(text, langOverride) {
   state.playback.fullText = sanitizeForSpeech(text);
   state.playback.lang = lang;
   state.playback.charIndex = 0;
+  state.playback.charsPerSecond = null; // fresh text — forget the old estimate
   speakFrom(state.playback.fullText, lang, 0);
 }
 
@@ -430,12 +431,22 @@ function speakFrom(fullText, lang, charOffset) {
   const voice = pickVoiceFor(lang);
   if (voice) utter.voice = voice;
   utter.rate = state.rate;
+
+  // For the ±5s skip buttons: Web Speech API has no real clock, so we
+  // measure our own — wall-clock time since this utterance started vs. how
+  // many characters it's gotten through — and use that as a live estimate
+  // of "characters per second" to convert seconds into a text offset.
+  const speechStartTime = performance.now();
   utter.onstart = () => {
     state.playback.playing = true;
     updatePlaybackUI();
   };
   utter.onboundary = e => {
     state.playback.charIndex = charOffset + e.charIndex;
+    const elapsedSec = (performance.now() - speechStartTime) / 1000;
+    if (elapsedSec > 0.3 && e.charIndex > 0) {
+      state.playback.charsPerSecond = e.charIndex / elapsedSec;
+    }
     updatePlaybackUI();
   };
   utter.onend = () => {
@@ -507,6 +518,23 @@ function restartPlayback() {
   if (!pb.fullText) return;
   pb.charIndex = 0;
   speakFrom(pb.fullText, pb.lang, 0);
+}
+
+// ±5s buttons. There's no real playback clock to seek within (see the note
+// in speakFrom), so "5 seconds" is an estimate: measured characters-per-
+// second at the current rate, falling back to a rough average speaking pace
+// before we have a real measurement yet.
+const FALLBACK_CHARS_PER_SECOND = 13; // ~150 wpm at rate 1.0
+
+function skipBy(deltaSeconds) {
+  const pb = state.playback;
+  if (!pb.fullText) return;
+  const cps = pb.charsPerSecond || FALLBACK_CHARS_PER_SECOND * state.rate;
+  const deltaChars = Math.round(cps * deltaSeconds);
+  const target = Math.max(0, Math.min(pb.fullText.length - 1, pb.charIndex + deltaChars));
+  const snapped = nearestWordStart(pb.fullText, target);
+  pb.charIndex = snapped;
+  speakFrom(pb.fullText, pb.lang, snapped);
 }
 
 function updatePlaybackUI() {
@@ -704,6 +732,8 @@ function initPoiCardControls() {
   document.getElementById('nextBtn').addEventListener('click', hidePoiCard);
   document.getElementById('restartBtn').addEventListener('click', restartPlayback);
   document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
+  document.getElementById('skipBackBtn').addEventListener('click', () => skipBy(-5));
+  document.getElementById('skipFwdBtn').addEventListener('click', () => skipBy(5));
 
   const slider = document.getElementById('progressSlider');
   slider.addEventListener('change', () => {
@@ -711,6 +741,7 @@ function initPoiCardControls() {
   });
 
   initLightbox();
+  initCarouselSwipe();
 }
 
 // ---------- Fullscreen photo viewer ----------
@@ -718,6 +749,7 @@ function initLightbox() {
   const lightbox = document.getElementById('photoLightbox');
   const img = document.getElementById('lightboxImg');
   document.getElementById('poiPhoto').addEventListener('click', e => {
+    if (justSwiped) { justSwiped = false; return; } // a swipe shouldn't also open the lightbox
     const clickedImg = e.target.closest('img');
     if (!clickedImg) return; // clicks on nav arrows/dots shouldn't open the lightbox
     img.src = clickedImg.src;
@@ -732,6 +764,34 @@ function initLightbox() {
     if (e.target === lightbox) {
       lightbox.classList.add('hidden');
       img.src = '';
+    }
+  });
+}
+
+// ---------- Carousel swipe gesture ----------
+// Attached once to the (stable) #poiPhoto container — its children get
+// replaced on every renderPhotoCarousel() call, so listeners live on the
+// parent and read `activePoi` fresh each time instead of closing over it.
+let swipeStartX = null;
+let swipeStartY = null;
+let justSwiped = false;
+
+function initCarouselSwipe() {
+  const photoEl = document.getElementById('poiPhoto');
+  photoEl.addEventListener('pointerdown', e => {
+    swipeStartX = e.clientX;
+    swipeStartY = e.clientY;
+  });
+  photoEl.addEventListener('pointerup', e => {
+    if (swipeStartX === null || !activePoi) return;
+    const dx = e.clientX - swipeStartX;
+    const dy = e.clientY - swipeStartY;
+    swipeStartX = null;
+    const photos = activePoi.photos || [];
+    if (photos.length > 1 && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      justSwiped = true;
+      activePhotoIndex += dx < 0 ? 1 : -1;
+      renderPhotoCarousel(activePoi);
     }
   });
 }
@@ -891,8 +951,18 @@ function registerServiceWorker() {
   // clients.claim() on its own), reload once so the page actually runs the
   // new app.js/index.html/css instead of silently staying on the old one —
   // this is what "update without having to force-quit the PWA" means here.
+  //
+  // clients.claim() also fires this same event the very FIRST time a page
+  // gets a controller at all (a brand-new install, nothing to "update"
+  // from) — skip that one, or every first-ever visit would reload itself
+  // right back to the start screen mid-load.
+  let hadController = !!navigator.serviceWorker.controller;
   let reloading = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!hadController) {
+      hadController = true;
+      return;
+    }
     if (reloading) return;
     reloading = true;
     window.location.reload();

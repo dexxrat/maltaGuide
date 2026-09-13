@@ -78,8 +78,12 @@
       <p id="poiText" class="poi-text"></p>
 
       <div class="playback-controls">
-        <button id="restartBtn" class="transport-btn" aria-label="restart from beginning">⟲</button>
-        <button id="playPauseBtn" class="transport-btn play-pause-btn" aria-label="play or pause">⏸</button>
+        <div class="transport-row">
+          <button id="restartBtn" class="transport-btn" aria-label="restart from beginning">⟲</button>
+          <button id="skipBackBtn" class="transport-btn skip-btn" aria-label="back 5 seconds">⏪5</button>
+          <button id="playPauseBtn" class="transport-btn play-pause-btn" aria-label="play or pause">⏸</button>
+          <button id="skipFwdBtn" class="transport-btn skip-btn" aria-label="forward 5 seconds">5⏩</button>
+        </div>
         <input type="range" id="progressSlider" class="progress-slider" min="0" max="1000" value="0" aria-label="seek">
       </div>
       <div class="rate-row-card">
