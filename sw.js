@@ -1,4 +1,4 @@
-const CACHE_NAME = 'malta-guide-v14';
+const CACHE_NAME = 'malta-guide-v15';
 
 // Static app-shell files. Photo paths are no longer hardcoded here — they're
 // read straight out of data/pois.json at install time, so adding a photo (or

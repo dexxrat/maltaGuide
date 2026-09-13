@@ -286,5 +286,37 @@
       "license": "CC BY-SA 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Kapelle_auf_Comino.jpg"
     }
+  ],
+  "sanctuary_our_lady_mellieha": [
+    {
+      "title": "File:Malta - Mellieha - Triq l-Inkurunazzjoni - Sanctuary of our Lady of Mellieha 02 ies.jpg",
+      "artist": "Frank Vincentz",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Malta_-_Mellieha_-_Triq_l-Inkurunazzjoni_-_Sanctuary_of_our_Lady_of_Mellieha_02_ies.jpg"
+    }
+  ],
+  "popeye_village": [
+    {
+      "title": "File:Popeye Village overview.JPG",
+      "artist": "Wusel007",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Popeye_Village_overview.JPG"
+    }
+  ],
+  "st_agatha_tower": [
+    {
+      "title": "File:St. Agatha's Tower-NW.JPG",
+      "artist": "Inkwina",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:St._Agatha%27s_Tower-NW.JPG"
+    }
+  ],
+  "mellieha_bay": [
+    {
+      "title": "File:Mellieha-bay-tonemapped.jpg",
+      "artist": "Mboesch",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mellieha-bay-tonemapped.jpg"
+    }
   ]
 }

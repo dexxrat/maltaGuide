@@ -410,6 +410,58 @@
       "photos": [
         "assets/photos/comino_chapel.jpg"
       ]
+    },
+    {
+      "id": "sanctuary_our_lady_mellieha",
+      "name": "Sanctuary of Our Lady of Mellieħa",
+      "category": "historic",
+      "icon": "🕯️",
+      "lat": 35.9604,
+      "lng": 14.3613,
+      "coordsVerified": true,
+      "coordsNote": "Coordinate from Wikipedia infobox (Q4405866).",
+      "photos": [
+        "assets/photos/sanctuary_our_lady_mellieha.jpg"
+      ]
+    },
+    {
+      "id": "popeye_village",
+      "name": "Popeye Village (Sweethaven)",
+      "category": "historic",
+      "icon": "⚓",
+      "lat": 35.960848,
+      "lng": 14.3413,
+      "coordsVerified": true,
+      "coordsNote": "Coordinate from Wikipedia infobox (Q1859009).",
+      "photos": [
+        "assets/photos/popeye_village.jpg"
+      ]
+    },
+    {
+      "id": "st_agatha_tower",
+      "name": "Saint Agatha's Tower (Red Tower)",
+      "category": "historic",
+      "icon": "🏯",
+      "lat": 35.97472,
+      "lng": 14.3425,
+      "coordsVerified": true,
+      "coordsNote": "Coordinate from Wikidata (Q1738896).",
+      "photos": [
+        "assets/photos/st_agatha_tower.jpg"
+      ]
+    },
+    {
+      "id": "mellieha_bay",
+      "name": "Mellieħa Bay (Għadira)",
+      "category": "beach",
+      "icon": "🏖️",
+      "lat": 35.96986,
+      "lng": 14.35033,
+      "coordsVerified": true,
+      "coordsNote": "Coordinate from Wikipedia infobox (Q20922822).",
+      "photos": [
+        "assets/photos/mellieha_bay.jpg"
+      ]
     }
   ]
 }

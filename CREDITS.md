@@ -100,3 +100,15 @@ All photos are from Wikimedia Commons under free licenses. Attribution kept here
 ### Chapel of the Return from Egypt
 - Rolf gastler, CC BY-SA 3.0. [Kapelle auf Comino.jpg](https://commons.wikimedia.org/wiki/File:Kapelle_auf_Comino.jpg)
 
+### Sanctuary of Our Lady of Mellieħa
+- Frank Vincentz, CC BY-SA 3.0. [Malta - Mellieha - Triq l-Inkurunazzjoni - Sanctuary of our Lady of Mellieha 02 ies.jpg](https://commons.wikimedia.org/wiki/File:Malta_-_Mellieha_-_Triq_l-Inkurunazzjoni_-_Sanctuary_of_our_Lady_of_Mellieha_02_ies.jpg)
+
+### Popeye Village (Sweethaven)
+- Wusel007, CC BY-SA 3.0. [Popeye Village overview.JPG](https://commons.wikimedia.org/wiki/File:Popeye_Village_overview.JPG)
+
+### Saint Agatha's Tower (Red Tower)
+- Inkwina, CC BY-SA 3.0. [St. Agatha's Tower-NW.JPG](https://commons.wikimedia.org/wiki/File:St._Agatha%27s_Tower-NW.JPG)
+
+### Mellieħa Bay (Għadira)
+- Mboesch, CC BY-SA 3.0. [Mellieha-bay-tonemapped.jpg](https://commons.wikimedia.org/wiki/File:Mellieha-bay-tonemapped.jpg)
+
