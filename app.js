@@ -34,7 +34,12 @@ let state = {
     ru: localStorage.getItem(STORAGE_KEYS.voiceRu) || null,
     en: localStorage.getItem(STORAGE_KEYS.voiceEn) || null
   },
-  rate: Number(localStorage.getItem(STORAGE_KEYS.rate)) || 1
+  rate: Number(localStorage.getItem(STORAGE_KEYS.rate)) || 1,
+  // Web Speech API has no real seekable timeline (it's synthesized live, not
+  // a decoded audio file), so "seeking" means: remember roughly how far into
+  // the sanitized text we've gotten (via onboundary word events) and, to
+  // seek/resume/change rate, cancel and re-speak from that character offset.
+  playback: { fullText: '', lang: 'ru', charIndex: 0, playing: false }
 };
 
 // ---------- Persistence helpers ----------
@@ -85,7 +90,6 @@ function applyStaticI18n() {
   document.getElementById('rateLabel').textContent = t('rateLabel');
   document.getElementById('simulateLabel').textContent = t('simulateLabel');
   document.getElementById('teleportBtn').textContent = t('teleportBtn');
-  document.getElementById('replayBtn').textContent = t('replayBtn');
   document.getElementById('nextBtn').textContent = t('nextBtn');
   document.getElementById('radiusLabel').textContent = t('radiusLabel');
   document.getElementById('resetProgressBtn').textContent = t('resetProgressBtn');
@@ -326,6 +330,9 @@ function hidePoiCard() {
   document.getElementById('poiCard').classList.add('hidden');
   window.speechSynthesis.cancel();
   activePoi = null;
+  state.playback.fullText = '';
+  state.playback.charIndex = 0;
+  state.playback.playing = false;
 }
 
 // Strips anything that reads awkwardly out loud (parenthetical asides, quote
@@ -339,16 +346,140 @@ function sanitizeForSpeech(text) {
     .trim();
 }
 
+// Starts (or restarts) narration from scratch — used for POI text and for
+// the short voice-preview samples in the settings screen.
 function speak(text, langOverride) {
   if (!('speechSynthesis' in window) || !text) return;
   const lang = langOverride || state.lang;
+  state.playback.fullText = sanitizeForSpeech(text);
+  state.playback.lang = lang;
+  state.playback.charIndex = 0;
+  speakFrom(state.playback.fullText, lang, 0);
+}
+
+// The actual engine: speaks fullText starting at charOffset. Re-called
+// whenever the user seeks, changes rate, or resumes after a pause that the
+// browser didn't handle natively (iOS Safari's speechSynthesis.resume() is
+// unreliable, so this is also the fallback path for that).
+function speakFrom(fullText, lang, charOffset) {
+  if (!('speechSynthesis' in window) || !fullText) return;
   window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(sanitizeForSpeech(text));
+  const remaining = fullText.slice(charOffset);
+  if (!remaining) {
+    state.playback.playing = false;
+    updatePlaybackUI();
+    return;
+  }
+  const utter = new SpeechSynthesisUtterance(remaining);
   utter.lang = lang === 'ru' ? 'ru-RU' : 'en-US';
   const voice = pickVoiceFor(lang);
   if (voice) utter.voice = voice;
   utter.rate = state.rate;
+  utter.onstart = () => {
+    state.playback.playing = true;
+    updatePlaybackUI();
+  };
+  utter.onboundary = e => {
+    state.playback.charIndex = charOffset + e.charIndex;
+    updatePlaybackUI();
+  };
+  utter.onend = () => {
+    // onend also fires when we cancel() to seek/restart elsewhere — only
+    // treat it as "finished" if we actually reached the end of the text.
+    if (state.playback.charIndex >= fullText.length - 1) {
+      state.playback.playing = false;
+      updatePlaybackUI();
+    }
+  };
+  utter.onerror = () => {
+    state.playback.playing = false;
+    updatePlaybackUI();
+  };
   window.speechSynthesis.speak(utter);
+}
+
+// Snaps a raw character offset to the start of the nearest word, so seeking
+// never begins mid-word.
+function nearestWordStart(text, targetIndex) {
+  const re = /\S+/g;
+  let match;
+  let best = 0;
+  while ((match = re.exec(text))) {
+    if (match.index <= targetIndex) best = match.index;
+    else break;
+  }
+  return best;
+}
+
+function togglePlayPause() {
+  const pb = state.playback;
+  if (!pb.fullText) return;
+
+  if (pb.playing) {
+    try { window.speechSynthesis.pause(); } catch (e) {}
+    pb.playing = false;
+    updatePlaybackUI();
+    return;
+  }
+
+  if (window.speechSynthesis.paused) {
+    window.speechSynthesis.resume();
+    pb.playing = true;
+    updatePlaybackUI();
+    // Safety net: iOS Safari sometimes silently fails to resume. If speech
+    // still isn't flowing shortly after, rebuild the utterance manually.
+    setTimeout(() => {
+      if (pb.playing && !window.speechSynthesis.speaking) {
+        speakFrom(pb.fullText, pb.lang, pb.charIndex);
+      }
+    }, 300);
+  } else {
+    speakFrom(pb.fullText, pb.lang, pb.charIndex);
+  }
+}
+
+function seekToFraction(fraction) {
+  const pb = state.playback;
+  if (!pb.fullText) return;
+  const target = Math.floor(fraction * pb.fullText.length);
+  const snapped = nearestWordStart(pb.fullText, target);
+  pb.charIndex = snapped;
+  speakFrom(pb.fullText, pb.lang, snapped);
+}
+
+function restartPlayback() {
+  const pb = state.playback;
+  if (!pb.fullText) return;
+  pb.charIndex = 0;
+  speakFrom(pb.fullText, pb.lang, 0);
+}
+
+function updatePlaybackUI() {
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const slider = document.getElementById('progressSlider');
+  if (!playPauseBtn || !slider) return; // card isn't open
+  playPauseBtn.textContent = state.playback.playing ? '⏸' : '▶';
+  const total = state.playback.fullText.length || 1;
+  const frac = Math.min(1, state.playback.charIndex / total);
+  slider.value = String(Math.round(frac * 1000));
+}
+
+function setRate(newRate) {
+  state.rate = newRate;
+  localStorage.setItem(STORAGE_KEYS.rate, String(newRate));
+  const display = newRate.toFixed(2).replace(/0$/, '') + '×';
+  const s1 = document.getElementById('rateSlider');
+  const s2 = document.getElementById('rateSliderCard');
+  const v1 = document.getElementById('rateValue');
+  const v2 = document.getElementById('rateValueCard');
+  if (s1) s1.value = String(newRate);
+  if (s2) s2.value = String(newRate);
+  if (v1) v1.textContent = display;
+  if (v2) v2.textContent = display;
+  // Rate can't change mid-utterance — restart from the current spot at the new rate.
+  if (state.playback.playing) {
+    speakFrom(state.playback.fullText, state.playback.lang, state.playback.charIndex);
+  }
 }
 
 // A short two-tone chime so a proximity trigger is noticeable even with the
@@ -500,24 +631,52 @@ function initVoicePickers() {
     }
   });
 
+  setRate(state.rate); // sync both sliders + labels to the stored value
+
   const rateSlider = document.getElementById('rateSlider');
-  const rateValue = document.getElementById('rateValue');
   if (rateSlider) {
-    rateSlider.value = state.rate;
-    rateValue.textContent = state.rate.toFixed(2).replace(/0$/, '') + '×';
-    rateSlider.addEventListener('input', () => {
-      state.rate = Number(rateSlider.value);
-      rateValue.textContent = state.rate.toFixed(2).replace(/0$/, '') + '×';
-      localStorage.setItem(STORAGE_KEYS.rate, String(state.rate));
-    });
+    rateSlider.addEventListener('input', () => setRate(Number(rateSlider.value)));
+  }
+  const rateSliderCard = document.getElementById('rateSliderCard');
+  if (rateSliderCard) {
+    rateSliderCard.addEventListener('input', () => setRate(Number(rateSliderCard.value)));
   }
 }
 
 function initPoiCardControls() {
   document.getElementById('closeCardBtn').addEventListener('click', hidePoiCard);
   document.getElementById('nextBtn').addEventListener('click', hidePoiCard);
-  document.getElementById('replayBtn').addEventListener('click', () => {
-    if (activePoi) speak(poiText(activePoi));
+  document.getElementById('restartBtn').addEventListener('click', restartPlayback);
+  document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
+
+  const slider = document.getElementById('progressSlider');
+  slider.addEventListener('change', () => {
+    seekToFraction(Number(slider.value) / 1000);
+  });
+
+  initLightbox();
+}
+
+// ---------- Fullscreen photo viewer ----------
+function initLightbox() {
+  const lightbox = document.getElementById('photoLightbox');
+  const img = document.getElementById('lightboxImg');
+  document.getElementById('poiPhoto').addEventListener('click', e => {
+    const clickedImg = e.target.closest('img');
+    if (!clickedImg) return; // clicks on nav arrows/dots shouldn't open the lightbox
+    img.src = clickedImg.src;
+    img.alt = clickedImg.alt;
+    lightbox.classList.remove('hidden');
+  });
+  document.getElementById('lightboxCloseBtn').addEventListener('click', () => {
+    lightbox.classList.add('hidden');
+    img.src = '';
+  });
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) {
+      lightbox.classList.add('hidden');
+      img.src = '';
+    }
   });
 }
 

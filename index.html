@@ -76,11 +76,29 @@
       <div id="poiPhoto" class="poi-photo">🖼️</div>
       <h2 id="poiName"></h2>
       <p id="poiText" class="poi-text"></p>
+
+      <div class="playback-controls">
+        <button id="restartBtn" class="transport-btn" aria-label="restart from beginning">⟲</button>
+        <button id="playPauseBtn" class="transport-btn play-pause-btn" aria-label="play or pause">⏸</button>
+        <input type="range" id="progressSlider" class="progress-slider" min="0" max="1000" value="0" aria-label="seek">
+      </div>
+      <div class="rate-row-card">
+        <span class="rate-icon">🐢</span>
+        <input type="range" id="rateSliderCard" min="0.7" max="1.3" step="0.05" value="1" aria-label="speech rate">
+        <span class="rate-icon">🐇</span>
+        <span id="rateValueCard" class="rate-value-card">1.0×</span>
+      </div>
+
       <div class="poi-actions">
-        <button id="replayBtn" class="secondary-btn">🔊 Прослушать ещё раз</button>
         <button id="nextBtn" class="primary-btn">Понятно, дальше</button>
       </div>
     </div>
+  </div>
+
+  <!-- FULLSCREEN PHOTO VIEWER -->
+  <div id="photoLightbox" class="photo-lightbox hidden">
+    <button id="lightboxCloseBtn" class="lightbox-close" aria-label="close photo">✕</button>
+    <img id="lightboxImg" src="" alt="">
   </div>
 
   <!-- DEV / GPS SIMULATOR PANEL -->

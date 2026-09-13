@@ -51,6 +51,7 @@ All photos are from Wikimedia Commons under free licenses. Attribution kept here
 ### Calypso's Cave
 - Diego Delso, CC BY-SA 4.0. [Bahía de Ramla desde la cueva de Calipso, isla de Gozo, Malta, 2021-08-22, DD 01.jpg](https://commons.wikimedia.org/wiki/File:Bah%C3%ADa_de_Ramla_desde_la_cueva_de_Calipso,_isla_de_Gozo,_Malta,_2021-08-22,_DD_01.jpg)
 - Gabriel Treeby Coleiro, CC BY-SA 4.0. [Ramla Bay from Calypso's Cave.jpg](https://commons.wikimedia.org/wiki/File:Ramla_Bay_from_Calypso%27s_Cave.jpg)
+- Arnold Böcklin, Public domain. [Arnold Böcklin 008.jpg](https://commons.wikimedia.org/wiki/File:Arnold_B%C3%B6cklin_008.jpg)
 
 ### Ramla Bay Roman Villa
 - Unknown author, Public domain. [Ramla l-Hamra c1910.jpg](https://commons.wikimedia.org/wiki/File:Ramla_l-Hamra_c1910.jpg)
