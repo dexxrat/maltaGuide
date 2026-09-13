@@ -188,10 +188,50 @@ html, body {
   flex-shrink: 0;
 }
 
+.topbar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
 .tabs {
   display: flex;
   gap: 8px;
-  margin-bottom: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.topbar-icon-btn {
+  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  width: 38px;
+  height: 36px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.lang-toggle-btn {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.topbar-icon-btn.spinning {
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .tab-btn {
@@ -287,7 +327,7 @@ main {
 .center-me-btn {
   position: absolute;
   right: 14px;
-  bottom: 24px;
+  bottom: 56px;
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -332,6 +372,13 @@ main {
 .poi-item-status {
   font-size: 0.78rem;
   margin-top: 2px;
+  border: none;
+  background: none;
+  padding: 4px 0;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .poi-item-status.visited { color: #2a9d5c; }

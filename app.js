@@ -55,6 +55,17 @@ function markVisited(id) {
   }
 }
 
+// Lets the user correct the automatic "visited" tracking by hand — e.g. mark
+// something visited without triggering the geo-fence, or clear a mistaken tick.
+function toggleVisited(id) {
+  const i = state.visited.indexOf(id);
+  if (i === -1) state.visited.push(id);
+  else state.visited.splice(i, 1);
+  saveVisited();
+  renderList();
+  updateMarkerStyles();
+}
+
 // ---------- Data loading ----------
 async function loadData() {
   const [poisRes, i18nRes] = await Promise.all([
@@ -87,7 +98,6 @@ function applyStaticI18n() {
   document.getElementById('tabMapBtn').textContent = t('tabMap');
   document.getElementById('tabListBtn').textContent = t('tabList');
   document.getElementById('voiceSettingsLabel').textContent = t('voiceSettings');
-  document.getElementById('rateLabel').textContent = t('rateLabel');
   document.getElementById('simulateLabel').textContent = t('simulateLabel');
   document.getElementById('teleportBtn').textContent = t('teleportBtn');
   document.getElementById('nextBtn').textContent = t('nextBtn');
@@ -104,14 +114,32 @@ function initStartScreen() {
     if (btn.dataset.lang === state.lang) btn.classList.add('active');
     else btn.classList.remove('active');
     btn.addEventListener('click', () => {
-      state.lang = btn.dataset.lang;
-      localStorage.setItem(STORAGE_KEYS.lang, state.lang);
+      setLanguage(btn.dataset.lang);
       document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b === btn));
-      applyStaticI18n();
     });
   });
 
   document.getElementById('startBtn').addEventListener('click', onStart);
+}
+
+// Switching language works both on the start screen and later, from inside
+// the app (topbar toggle) — it re-renders whatever's currently visible
+// without touching audio that may already be playing.
+function setLanguage(lang) {
+  state.lang = lang;
+  localStorage.setItem(STORAGE_KEYS.lang, lang);
+  applyStaticI18n();
+  updateLangToggleLabel();
+  renderList();
+  if (activePoi) {
+    document.getElementById('poiName').textContent = poiName(activePoi);
+    document.getElementById('poiText').textContent = poiText(activePoi);
+  }
+}
+
+function updateLangToggleLabel() {
+  const btn = document.getElementById('langToggleBtn');
+  if (btn) btn.textContent = state.lang.toUpperCase();
 }
 
 function unlockSpeech() {
@@ -164,6 +192,11 @@ function initTabs() {
       state.map.panTo([state.currentPos.lat, state.currentPos.lng]);
     }
   });
+  document.getElementById('langToggleBtn').addEventListener('click', () => {
+    setLanguage(state.lang === 'ru' ? 'en' : 'ru');
+  });
+  document.getElementById('checkUpdateBtn').addEventListener('click', checkForUpdates);
+  updateLangToggleLabel();
 }
 function switchTab(tab) {
   document.getElementById('mapView').classList.toggle('hidden', tab !== 'map');
@@ -260,9 +293,9 @@ function renderList() {
       <div class="poi-item-icon">${poi.icon}</div>
       <div class="poi-item-body">
         <div class="poi-item-name">${poiName(poi)}</div>
-        <div class="poi-item-status ${visited ? 'visited' : 'not-visited'}">
+        <button class="poi-item-status ${visited ? 'visited' : 'not-visited'}" data-id="${poi.id}">
           ${visited ? '✅ ' + t('visitedLabel') : '⬜ ' + t('notVisitedLabel')}
-        </div>
+        </button>
       </div>
       <button class="poi-item-play" data-id="${poi.id}">${t('manualPlayBtn')}</button>
     `;
@@ -273,6 +306,9 @@ function renderList() {
       const poi = state.pois.find(p => p.id === btn.dataset.id);
       if (poi) showPoiCard(poi, { markVisit: false });
     });
+  });
+  ul.querySelectorAll('.poi-item-status').forEach(btn => {
+    btn.addEventListener('click', () => toggleVisited(btn.dataset.id));
   });
 }
 
@@ -664,6 +700,7 @@ function initVoicePickers() {
 
 function initPoiCardControls() {
   document.getElementById('closeCardBtn').addEventListener('click', hidePoiCard);
+  document.getElementById('backBtn').addEventListener('click', hidePoiCard);
   document.getElementById('nextBtn').addEventListener('click', hidePoiCard);
   document.getElementById('restartBtn').addEventListener('click', restartPlayback);
   document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
@@ -839,12 +876,43 @@ function initDevPanel() {
 }
 
 // ---------- Service worker ----------
+let swRegistration = null;
+
 function registerServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(err => {
-      console.warn('SW registration failed', err);
-    });
+  if (!('serviceWorker' in navigator)) return;
+
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    swRegistration = reg;
+  }).catch(err => {
+    console.warn('SW registration failed', err);
+  });
+
+  // Whenever a new service worker takes control (it calls skipWaiting() +
+  // clients.claim() on its own), reload once so the page actually runs the
+  // new app.js/index.html/css instead of silently staying on the old one —
+  // this is what "update without having to force-quit the PWA" means here.
+  let reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloading) return;
+    reloading = true;
+    window.location.reload();
+  });
+}
+
+// Manual "check for updates" button: ask the browser to re-fetch sw.js right
+// now instead of waiting for its normal (much less frequent) background
+// check. If a new version installs, the controllerchange listener above
+// reloads the page automatically.
+async function checkForUpdates() {
+  const btn = document.getElementById('checkUpdateBtn');
+  if (btn) btn.classList.add('spinning');
+  try {
+    const reg = swRegistration || (await navigator.serviceWorker.getRegistration());
+    if (reg) await reg.update();
+  } catch (e) {
+    console.warn('Update check failed', e);
   }
+  setTimeout(() => { if (btn) btn.classList.remove('spinning'); }, 600);
 }
 
 // ---------- Boot ----------
